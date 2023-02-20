@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head th:insert="~{fragments/head :: head}"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+<head th:insert="~{fragments/menu :: menu}"/>
+
+
+<div class="container" style="width: 20%">
+    <form th:action="@{/user}" method="post">
+        <input type="hidden" name="userId" th:value="${user.id}">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    Name:
+                </div>
+                <div class="col">
+                    <input type="text" name="username" th:value="${user.username}">
+                </div>
+            </div>
+        </div>
+        <div class="container" th:each="rol : ${roles}" th:if="${isAdmin}">
+            <div class="row">
+                <div class="col">
+                    <h5 th:text="${rol}"/>
+                </div>
+                <div class="col">
+                    <input type="checkbox" th:name="${rol}"
+                           th:checked="${user.Roles.contains(rol)}">
+                </div>
+            </div>
+        </div>
+
+        <div class="container" th:each="rol : ${roles}" th:if="${isModerator}" style="display: none">
+            <input type="checkbox" th:name="${rol}"
+                   th:checked="${user.Roles.contains(rol)}">
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-warning btn-lg btn-block"><a href="/user">Back</a></button>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+
+<div th:insert="~{fragments/js :: js}"/>
+</body>
+</html>

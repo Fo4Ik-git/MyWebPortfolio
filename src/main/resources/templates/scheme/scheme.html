@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"/>
+<body>
+<header th:insert="~{fragments/menu :: menu}"></header>
+
+<div class="controller ustify-content-center">
+    <button th:if="${isActive}"  class="btn btn-primary"><a href="/scheme/add">Create Post</a></button>
+
+    <div th:each="el : ${schemeGet}">
+        <div class="container" style="background-color: beige; border-radius: 15px">
+            <div class="row"><p></p></div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-4">
+                        <img th:if="${isActive}" class="mx-auto d-block" th:src="${el.nameLogoToSrc}"
+                             th:alt="'error img: ' + ${el.nameLogoToSrc}" height="250" width="250">
+                        <button><a th:href="${el.nameLogoToSrc}">Show image</a></button>
+                    </div>
+                    <div class="col" th:if="${userName == el.userName} or ${isModerator}">
+                        <a th:href="'/scheme/' + ${el.id} + '/edit'" class="btn btn-primary">Edit</a>
+                        <a th:href="'/scheme/' + ${el.id} + '/delete'" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label th:for="${el.name}" th:text="'Name: ' + ${el.name}"></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <label th:text="'Decription: ' + ${el.description}"></label>
+                    </div>
+                </div>
+                <div class="row" th:if="${el.schemeText}">
+                    <div class="col-5">
+                        <!-- <label th:text="'Text to copy scheme: ' + ${el.schemeText}"></label>-->
+                        <label id="schemeText" th:text="${el.schemeText}" style="display: none"></label>
+                        <button id="copy-button">Copy to Clipboard scheme</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label th:text="'Author: ' + ${el.userName}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+        <p/></p>
+    </div>
+
+
+</div>
+
+
+
+
+<script>
+    const copyButton = document.querySelector('#copy-button');
+    const myLabel = document.querySelector('#schemeText');
+
+    copyButton.addEventListener('click', function() {
+        navigator.clipboard.writeText(myLabel.textContent)
+            .then(() => {
+                console.log('Text copied to clipboard');
+            })
+            .catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+    });
+</script>
+
+
+
+<div th:insert="~{fragments/js :: js}"/>
+</body>
+</html>

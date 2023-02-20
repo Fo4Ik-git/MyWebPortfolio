@@ -1,0 +1,48 @@
+<!-- Upload File -->
+<div class="modal" id="uploadFile" data-bs-keyboard="false" tabindex="-1" aria-labelledby="uploadFileLabel" th:fragment="uploadFile">
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="uploadFileLabel">Upload File</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/files/uploadFile}" method="post" enctype="multipart/form-data">
+          <input type="file" name="fileUpload" id="fileUpload">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" value="Upload" class="btn btn-primary">Upload File</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Folder -->
+<div class="modal" id="createFolder" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createFolderLabel" th:fragment="createFolder">
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createFolderLabel">Create Folder</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{/files/createFolder}" method="post" enctype="multipart/form-data">
+          <input type="text" name="folderName" id="folderCreate" placeholder="Enter Folder Name">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" value="Upload" class="btn btn-primary">Create Folder</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form th:action="@{/files/deleteFile}" method="post" th:fragment="deleteFile">
+  <input type="hidden" name="filePath" th:value="${file.getPath()}">
+  <button type="submit" value="Upload" class="btn btn-primary">Delete File</button>
+</form>

@@ -1,0 +1,81 @@
+<section class="vh-100" th:fragment="registration">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+             class="img-fluid" alt="Phone image">
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form method="post" th:action="@{/registration}" th:fragment="login">
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col">
+                <!--Name input-->
+                <div class="form-outline mb-4">
+                  <input type="text" id="name" name="name" class="form-control form-control-lg"/>
+                  <label class="form-label" for="name">Name</label>
+                </div>
+              </div>
+              <div class="col">
+                <!--Lastame input-->
+                <div class="form-outline mb-4">
+                  <input type="text" id="lastname" name="lastname"
+                         class="form-control form-control-lg"/>
+                  <label class="form-label" for="lastname">Lastname</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Login input-->
+          <div class="form-outline mb-4">
+            <input type="text" id="username" name="username" class="form-control form-control-lg"/>
+            <label class="form-label" for="username">Login</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <input type="password" id="password" name="password" class="form-control form-control-lg"/>
+            <label class="form-label" for="password">Password</label>
+          </div>
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input type="email" id="email" name="email" class="form-control form-control-lg"/>
+            <label class="form-label" for="email">Email address</label>
+          </div>
+          <!-- Voucher input -->
+          <div class="form-outline mb-4">
+            <input type="text" id="voucher" name="voucher" class="form-control form-control-lg"/>
+            <label class="form-label" for="voucher">Voucher</label>
+          </div>
+
+          <!-- <div class="d-flex justify-content-around align-items-center mb-4">
+               &lt;!&ndash; Checkbox &ndash;&gt;
+               <div class="form-check">
+                   <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked/>
+                   <label class="form-check-label" for="form1Example3"> Remember me </label>
+               </div>
+           </div>-->
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+          <button  class="btn btn-warning btn-lg btn-block"><a href="/login">Sign in</a></button>
+
+          <!--<div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+          </div>
+
+          <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
+             role="button">
+              <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+          </a>
+          <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
+             role="button">
+              <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>-->
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

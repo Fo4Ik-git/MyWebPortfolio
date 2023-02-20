@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head th:insert="~{fragments/head :: head}"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+<head th:insert="~{fragments/menu :: menu}"/>
+
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID|</th>
+            <th>Login|</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <th th:text="${user.id}"/>
+            <th th:text="${user.username}"/>
+            <th th:text="${user.roles} + ' '"/>
+            <th><a th:href="'/user/'+ ${user.id}">Edit</a></th>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<div th:insert="~{fragments/js :: js}"/>
+</body>
+</html>

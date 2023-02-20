@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"/>
+<body>
+
+
+<div class="controller ustify-content-center">
+    <div th:insert="~{fragments/registerPart :: registration}"/>
+
+    <div th:text="${message}">
+    </div>
+</div>
+
+
+<div th:insert="~{fragments/js :: js}"/>
+</body>
+</html>
