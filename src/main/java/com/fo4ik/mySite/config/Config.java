@@ -1,10 +1,13 @@
 package com.fo4ik.mySite.config;
 
+import com.fo4ik.mySite.controllers.IndexController;
 import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 
@@ -12,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config {
+
+    private static final Logger log = LoggerFactory.getLogger(Config.class);
 
     private final UserRepo userRepo;
     private final LogoRepo logoRepo;
@@ -22,7 +27,7 @@ public class Config {
 
     }
 
-    public void getUserLogo(@AuthenticationPrincipal User user, Model model) {
+    public void getUserLogo(User user, Model model) {
         try {
             model.addAttribute("user", user);
             if (user != null) {
@@ -51,7 +56,7 @@ public class Config {
                 }
             }
         } catch (Exception e) {
-
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

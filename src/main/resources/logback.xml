@@ -1,0 +1,49 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+
+            <pattern>[%date] %highlight([%level]) [%logger{10} %file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <property name="LOG_FILE" value="latest"/>
+    <property name="LOG_DIR" value="logs/"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/latest.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>logs/log-%d{yyyy-MM-dd_HH-mm-ss}.%i.log</fileNamePattern>
+
+            <!-- or whenever the file size reaches 100MB -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+
+            <!-- keep 30 days' worth of history capped at 3GB total size -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <!--<pattern>$d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n</pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %cyan(%logger{15}) - (%msg %n) %nopex</pattern>
+            <!--<pattern>[%date] %highlight([%level]) [%logger{10} %file:%line] - %msg%n</pattern>-->
+        </encoder>
+        <append>false</append>
+    </appender>
+
+    <logger name="com.fo4ik.mySite" level="info" additivity="false">
+        <appender-ref ref="STDOUT"/>
+       <!-- <appender-ref ref="FILE"/>-->
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="FILE"/>-->
+    </root>
+
+    <colors>
+        <color name="WHITE" value="37;1"/>
+        <color name="YELLOW" value="33;1"/>
+        <color name="RED" value="31;1"/>
+        <color name="CYAN" value="36;1"/>
+    </colors>
+</configuration>

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ public class WebSecurityConfig {
 
     //@Autowired
     private final UserService userService;
+
     public static PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
@@ -32,14 +34,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/scheme/add", "/scheme").hasAnyAuthority( "USER")
-                        .requestMatchers("/user","/scheme/{id}/edit").hasAnyAuthority("ADMIN", "MODERATOR")
-                        .requestMatchers("/login").authenticated()
-                        .requestMatchers( "/registration", "/activate/*").permitAll().anyRequest().authenticated()
+                                .requestMatchers("/user", "/projects/**", "/src/main/resources/templates/css/**").hasAnyAuthority("ADMIN", "MODERATOR", "USER")
+                                .requestMatchers("/login").authenticated()
+                                .requestMatchers("/", "/registration", "/activate/*", "/files/users/**", "/projects", "/src/main/resources/templates/css/**").permitAll().anyRequest().authenticated()
                         //"/","/scheme",
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);
@@ -53,4 +55,5 @@ public class WebSecurityConfig {
                 .passwordEncoder(getPasswordEncoder());
 
     }
+
 }

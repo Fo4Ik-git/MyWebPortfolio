@@ -5,20 +5,25 @@ import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Controller
 public class SettingsController {
+    private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
     private final LogoRepo logoRepo;
     private final UserRepo userRepo;
 
@@ -30,25 +35,39 @@ public class SettingsController {
     @GetMapping("/settings")
     public String settingsPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("title", "Settings");
-        Config config = new Config(userRepo, logoRepo);
-        config.getUserLogo(user, model);
+        try {
+            Config config = new Config(userRepo, logoRepo);
+            config.getUserLogo(user, model);
+        } catch (Exception e) {
+            log.error("Error in settings: " + e.getMessage());
+        }
         return "settings/settings";
     }
 
-    @PostMapping("/settings/add_logo")
+    @PostMapping("/settings/addLogo")
     public String addLogo(@AuthenticationPrincipal User user, @RequestParam("logoFile") MultipartFile logoFile, Model model) {
         try {
+            if (logoFile.getOriginalFilename().equals("")) {
+                model.addAttribute("error", "File is empty");
+                log.error("Error to add logo: File is empty");
+                return "redirect:/settings";
+            }
+
             Logo logos = logoRepo.findById(user.getId());
-            if (logos != null && !logoFile.getOriginalFilename().equals("")) {
+            if (logos != null) {
                 logos.setPath(saveLogo(user, logoFile, model));
                 logoRepo.save(logos);
-            } else {
+                log.info("Logo for user " + user.getUsername() + " has been changed, new logo: " + logos.getPath());
+            }
+            else {
                 Logo logo = new Logo(saveLogo(user, logoFile, model), user);
                 logo.setId(user.getId());
                 logoRepo.save(logo);
+                log.info("Logo for user " + user.getUsername() + " has been added, new logo: " + logo.getPath());
             }
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
+            log.error("Error to add logo: " + e.getMessage());
             return "redirect:/scheme";
         }
 
@@ -57,18 +76,19 @@ public class SettingsController {
 
     private String saveLogo(User user, MultipartFile logoFile, Model model) {
         try {
+            String format = "logo." + StringUtils.getFilenameExtension(logoFile.getOriginalFilename());
             Path folder = Path.of(createUserFolder(user.getId()) + "/");
-            String[] fileNameArray = logoFile.getOriginalFilename().split("\\.");
-            String format = "logo." + fileNameArray[fileNameArray.length - 1];
-            Path path = Path.of(folder + "/" + format);
-            byte[] bytes = logoFile.getBytes();
-            Files.write(path, bytes);
+            Path path = folder.resolve(format);
+            Files.write(path, logoFile.getBytes());
 
-            return String.valueOf(path);
-        } catch (Exception e) {
+            log.info("Logo for user " + user.getUsername() + " has been saved");
+
+            return path.toString();
+        } catch (IOException e) {
             model.addAttribute("error", e.getMessage());
+            log.error("Error to save logo: " + e.getMessage());
+            return null;
         }
-        return null;
     }
 
     public Path createUserFolder(Long userId) {
@@ -79,9 +99,54 @@ public class SettingsController {
             }
             return Path.of(file.getPath());
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            log.error("Error to create user folder: " + e.getMessage());
         }
         return null;
+    }
+
+    @PostMapping("/settings/userEdit")
+    public String userEdit(@AuthenticationPrincipal User user,@RequestParam("username") String username, @RequestParam("name") String name, @RequestParam("lastname") String lastname, @RequestParam("description") String description, Model model) {
+        try {
+            User userFromDb = userRepo.findByUsername(username);
+            if(userFromDb != null && userFromDb.getId() != user.getId()) {
+                model.addAttribute("error", "User with this name already exists");
+                return "redirect:/settings";
+            }
+            user.setUsername(username);
+            user.setName(name);
+            user.setLastname(lastname);
+            user.setDescription(description);
+            userRepo.save(user);
+            log.info("User " + user.getUsername() + " has been edited");
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            log.error("Error to edit user: " + e.getMessage());
+        }
+        return "redirect:/settings";
+    }
+
+    @PostMapping("/settings/addProject")
+    public String addProject(@AuthenticationPrincipal User user, @RequestParam("projectName") String projectName, @RequestParam("projectDescription") String projectDescription, Model model) {
+        try {
+            if (projectName.equals("")) {
+                model.addAttribute("error", "Project name is empty");
+                log.error("Error to add project: Project name is empty");
+                return "redirect:/settings";
+            }
+            if (projectDescription.equals("")) {
+                model.addAttribute("error", "Project description is empty");
+                log.error("Error to add project: Project description is empty");
+                return "redirect:/settings";
+            }
+           // Projects project = new Projects(projectName, projectDescription, user);
+            //projectsRepo.save(project);
+           // log.info("Project " + project.getName() + " has been added");
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            log.error("Error to add project: " + e.getMessage());
+            return "redirect:/settings";
+        }
+        return "redirect:/settings";
     }
 
 }

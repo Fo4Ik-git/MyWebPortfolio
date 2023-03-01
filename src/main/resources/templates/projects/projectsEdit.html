@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"></head>
+<body>
+<header th:insert="~{fragments/menu.html :: menu}"></header>
+
+<button class="btn btn-projects"><a href="/projects/add">Projects Add</a></button>
+
+<div class="container" >
+    <form th:action="@{/projects/edit/{id}(id=${project.getId()})}" method="post" class="projectAddForm">
+        <div class="mb-3">
+            <label for="InputName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="InputName" name="InputName" aria-describedby="nameHelp" th:value="${project.getName()}">
+            <label id="nameHelp" class="form-text">Enter name</label>
+        </div>
+        <div class="mb-3">
+            <label for="InputDescription" class="form-label">Description</label>
+            <textarea type="text" class="form-control" id="InputDescription" name="InputDescription" th:text="${project.getDescription()}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="InputUtils" class="form-label">Utils</label>
+            <input type="text" class="form-control" id="InputUtils" name="InputUtils" aria-describedby="utilsHelp" th:value="${project.getUtilsString()}">
+            <label id="utilsHelp" class="form-text">Enter utils like: Name1, Name2, Name3 ...</label>
+        </div>
+        <div class="mb-3">
+            <label for="InputLinks" class="form-label">Links</label>
+            <textarea type="text" class="form-control" id="InputLinks" name="InputLinks"
+                      aria-describedby="linksHelp" th:text="${project.getLinksString()}"></textarea>
+            <label id="linksHelp" class="form-text">Enter links like:
+                linkToSite1, linkToImage1;
+                linkToSite2, linkToImage2;
+                ...
+            </label>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="inProgress" name="inProgress" th:checked="${project.isInProgress()}">
+            <label class="form-check-label" for="inProgress">In Progress?</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<footer th:insert="~{fragments/js :: js}"></footer>
+</body>
+</html>

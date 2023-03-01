@@ -5,13 +5,31 @@
 <head th:insert="~{fragments/menu :: menu}"/>
 
 
-<div class="container">
-    Add logo:
+<!-- Edit Logo Modal Button trigger -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logoEditModal">
+    Edit logo
+</button>
+<!-- Edit User Modal Button trigger -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userEditModal">
+    Edit user data
+</button>
 
-    <form th:action="@{/settings/add_logo}" method="post" enctype="multipart/form-data">
-        <input type="file" name="logoFile" id="logoFile">
-        <button type="submit" value="Upload" class="btn btn-primary">Add logo</button>
-    </form>
-</div>
+<!--  Edit User Modal -->
+<div th:insert="~{fragments/settingsFragments :: userEdit}"/>
+<!--  Edit Logo Modal -->
+<div th:insert="~{fragments/settingsFragments :: logoEdit}"/>
+
+
+
+<script>
+    //Count characters in textarea
+    const textarea = document.querySelector("#description");
+    const count = document.querySelector("#count");
+
+    textarea.addEventListener("input", function() {
+        count.innerText = `(${1000 - textarea.value.length})`;
+    });
+</script>
+<div th:insert="~{fragments/js :: js}"/>
 </body>
 </html>

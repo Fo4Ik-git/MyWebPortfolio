@@ -5,6 +5,8 @@ import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserRepo userRepo;
     private final LogoRepo logoRepo;
 
@@ -29,20 +32,24 @@ public class UserController {
 
     @GetMapping
     public String userList(@AuthenticationPrincipal User user, Model model) {
-        Config config = new Config(userRepo, logoRepo);
-        config.getUserLogo(user, model);
-        model.addAttribute("user", user);
+        try {
+            Config config = new Config(userRepo, logoRepo);
+            config.getUserLogo(user, model);
+            model.addAttribute("user", user);
 
-        List<Role> roles = new ArrayList<>(user.getRoles());
-        for (Role role : roles) {
-            switch (role) {
-                case ADMIN:
-                    model.addAttribute("users", userRepo.findAll());
-                    break;
-                case MODERATOR:
-                    model.addAttribute("users", userRepo.findAll());
-                    break;
+            List<Role> roles = new ArrayList<>(user.getRoles());
+            for (Role role : roles) {
+                switch (role) {
+                    case ADMIN:
+                        model.addAttribute("users", userRepo.findAll());
+                        break;
+                    case MODERATOR:
+                        model.addAttribute("users", userRepo.findAll());
+                        break;
+                }
             }
+        } catch (Exception e) {
+            log.error("Error in userList method: " + e.getMessage());
         }
 
         //model.addAttribute("users", userRepo.findAll());
@@ -53,12 +60,16 @@ public class UserController {
     // This getMaping is for user profile, it`s been /user/{id}
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, @AuthenticationPrincipal User userLogo, Model model) {
-        Config config = new Config(userRepo, logoRepo);
-        config.getUserLogo(userLogo, model);
+        try {
+            Config config = new Config(userRepo, logoRepo);
+            config.getUserLogo(userLogo, model);
 
-        model.addAttribute("user", user);
-        model.addAttribute("title", "User edit");
-        model.addAttribute("roles", Role.values());
+            model.addAttribute("user", user);
+            model.addAttribute("title", "User edit");
+            model.addAttribute("roles", Role.values());
+        } catch (Exception e) {
+            log.error("Error in userEditForm method: " + e.getMessage());
+        }
         return "settings/userEdit";
     }
 
@@ -69,23 +80,27 @@ public class UserController {
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user
     ) {
-        user.setUsername(username);
+        try {
+            user.setUsername(username);
 
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
+            Set<String> roles = Arrays.stream(Role.values())
+                    .map(Role::name)
+                    .collect(Collectors.toSet());
 
 
-        if (form != null) {
-            user.getRoles().clear();
-            for (String key : form.keySet()) {
-                if (roles.contains(key)) {
-                    user.getRoles().add(Role.valueOf(key));
+            if (form != null) {
+                user.getRoles().clear();
+                for (String key : form.keySet()) {
+                    if (roles.contains(key)) {
+                        user.getRoles().add(Role.valueOf(key));
+                    }
                 }
             }
-        }
 
-        userRepo.save(user);
+            userRepo.save(user);
+        } catch (Exception e) {
+            log.error("Error in userSave method: " + e.getMessage());
+        }
 
         return "redirect:/user";
     }

@@ -1,0 +1,144 @@
+body {
+    background-size: auto;
+    background-image: url("https://wallpapercave.com/wp/wp2757874.gif");
+}
+a{
+    text-decoration: none;
+}
+
+/* Index page*/
+.main h1 {
+    font-size: 50px;
+    color: #ffffff;
+}
+
+.main h3 {
+    color: #E5E7EB;
+}
+
+.btn-cv {
+    background-color: #F2363C;
+}
+
+.btn-projects {
+    background-color: #374151;
+}
+
+.btn-cv, .btn-projects {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+.btn-cv a, .btn-projects a {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.btn-projects a {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.image {
+    border-radius: 50%;
+}
+
+/* Projects Add*/
+.projectAddForm label{
+    color: #ffffff;
+}
+
+/* Projects*/
+.project h1 {
+    color: #E5E7E0;
+}
+.project h4 {
+    color: #D1D5DB;
+}
+.project li{
+    color: #9CA3AF;
+    margin-left: 20px;
+}
+.project {
+    margin: 20px;
+    background-color: #1F2937;
+    padding: 10px;
+    border-radius: 10px;
+}
+.project ul{
+    margin: 0;
+    padding: 0;
+}
+.project li::marker {
+    color: #EE3737;
+}
+
+/*
+* Navbar
+ */
+
+.navbar-custom {
+    background-color: #171721;
+}
+
+.nav-item a {
+    color: #ffffff;
+}
+
+.dropdown-menu li {
+    margin-bottom: 5px;
+}
+
+.menuName {
+    color: #ffffff;
+}
+
+.navbar-collapse li {
+    list-style: none;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+.nav-link{
+    font-size: 20px;
+}
+
+
+
+
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #171721;
+    border: 0px none #ffffff;
+    border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #f23634;
+}
+::-webkit-scrollbar-thumb:active {
+    background: #f23634;
+}
+::-webkit-scrollbar-track {
+    background: #171721;
+    border: 0px none #ffffff;
+    border-radius: 0px;
+}
+::-webkit-scrollbar-track:hover {
+    background: #1e222c;
+}
+::-webkit-scrollbar-track:active {
+    background: #1e222c;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}

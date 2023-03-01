@@ -7,7 +7,7 @@
 <div class="container mt-5 mb-5" th:each="el : ${schemes}">
     <div th:if="${userName == el.userName} or ${isModerator}">
         <h1>Edit element</h1>
-        <form method="post" th:action="@{/scheme/{id}/edit(id=${scheme.getId()})}" enctype="multipart/form-data">
+        <form method="post" th:action="@{/templates/projects/{id}/edit(id=${scheme.getId()})}" enctype="multipart/form-data">
             <!--<h1 th:text="@{/scheme/{id}/edit}"></h1>-->
             <div class="form-group">
                 <label for="name">Name</label>

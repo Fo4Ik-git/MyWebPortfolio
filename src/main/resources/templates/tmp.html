@@ -1,8 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-custom" th:fragment="menu">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom">
 
     <div class="container" bis_skin_checked="1">
         <button  class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                 aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="navbarColor01" bis_skin_checked="1">
@@ -11,18 +22,21 @@
                 <h3 class="menuName">Vladyslav Zinkovskyi</h3>
             </li>
 
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Main</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/projects">Projects</a>
                 </li>
+                <li class="nav-item" th:if="${user}">
+                    <a class="nav-link" href="/elements">Редагувати елемент</a>
+                </li>
             </ul>
 
             <li class="nav-item dropdown" th:if="${user}">
                 <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img th:if="${logo}" th:src="@{'/' + ${logo}}" alt="user logo"
+                    <img th:if="${logo}" th:src="${logo}" alt=""
                          style="border-radius: 100px;width:48px;height:48px;">
                     <img th:unless="${logo}" src="https://jaylog.co/wp-content/uploads/2017/12/noimg.png" alt="" style="border-radius: 100px;width:48px;height:48px;">
                 </button>
@@ -48,3 +62,32 @@
     </div>
 </nav>
 
+<!--<main class="container" style="background-color: white">
+    <div class="row  justify-content-center">
+        <div class="col-md-4 text-center">
+            <img src="${image}" class="img-fluid rounded-circle">
+        </div>
+        <div class="col-md-6 text-center">
+            <h1>Hello!</h1>
+            <p>My name is [Name], and I am a [Title].</p>
+        </div>
+    </div>
+</main>-->
+<div class="d-flex align-items-center justify-content-center" style="height: 90vh;">
+    <div class="row">
+        <div class="col">
+            <img src="" alt="">
+        </div>
+        <div class="col">
+            <h1>Hello</h1>
+            <p>VLad</p>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+</html>
