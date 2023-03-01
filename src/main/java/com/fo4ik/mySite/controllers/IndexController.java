@@ -1,26 +1,20 @@
 package com.fo4ik.mySite.controllers;
 
+import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Logo;
-import com.fo4ik.mySite.model.Skills;
+import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
-import com.fo4ik.mySite.model.User;
-import com.fo4ik.mySite.config.Config;
-import com.fo4ik.mySite.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class IndexController {
@@ -36,14 +30,20 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index(@AuthenticationPrincipal User user, Model model) {
+    public String index(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("title", "Index page");
+            System.out.println("Current theme index: " + model.getAttribute("theme"));
+            if (redirectAttributes.getFlashAttributes().get("theme") != null) {
+                model.addAttribute("theme", redirectAttributes.getFlashAttributes().get("theme"));
+            } else if (model.getAttribute("theme") == null) {
+                model.addAttribute("theme", "dark");
+            }
             if (user != null) {
                 Config config = new Config(userRepo, logoRepo);
                 config.getUserLogo(user, model);
                 Logo logo = logoRepo.findByUser(user);
-                if (logo != null){
+                if (logo != null) {
                     model.addAttribute("image", logo.getPath());
                 }
 
@@ -54,10 +54,22 @@ public class IndexController {
                 model.addAttribute("image", contentLogo.getPath());
                 model.addAttribute("contentUser", contentUser);
             }
+
+
         } catch (Exception e) {
             log.error("Error in index: " + e.getMessage());
         }
         return "index";
+    }
+
+    @GetMapping("/switchTheme")
+    public String switchTheme(@RequestParam("theme") String theme, Model model, RedirectAttributes redirectAttributes) {
+        if (theme.equals("dark")) {
+            redirectAttributes.addFlashAttribute("theme", "light");
+        } else {
+            redirectAttributes.addFlashAttribute("theme", "dark");
+        }
+        return "redirect:/";
     }
 
 

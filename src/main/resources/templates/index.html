@@ -3,6 +3,7 @@
 <head th:insert="~{fragments/head :: head}"></head>
 
 <body class="main">
+<head th:replace="~{fragments/head :: head}"></head>
 <header th:insert="~{fragments/menu.html :: menu}"></header>
 
 <main class="d-flex align-items-center justify-content-center" style="height: 90vh;" th:if="${image}">

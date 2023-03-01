@@ -35,6 +35,7 @@ public class MvcConfig implements WebMvcConfigurer {
         } else {
             registry.addResourceHandler("/**").addResourceLocations("file://" + uploadDirectory + "/");
         }
+
     }
 
     public void addViewControllers(ViewControllerRegistry registry) {

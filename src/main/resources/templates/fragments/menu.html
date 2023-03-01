@@ -1,14 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-custom" th:fragment="menu">
 
     <div class="container" bis_skin_checked="1">
-        <button  class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
                 aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="navbarColor01" bis_skin_checked="1">
 
             <li>
-                <h3 class="menuName">Vladyslav Zinkovskyi</h3>
+                <h3><a class="menuName" href="/">Vladyslav Zinkovskyi</a></h3>
             </li>
 
             <ul class="navbar-nav">
@@ -24,25 +24,81 @@
                 <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img th:if="${logo}" th:src="@{'/' + ${logo}}" alt="user logo"
                          style="border-radius: 100px;width:48px;height:48px;">
-                    <img th:unless="${logo}" src="https://jaylog.co/wp-content/uploads/2017/12/noimg.png" alt="" style="border-radius: 100px;width:48px;height:48px;">
+                    <img th:unless="${logo}" src="https://jaylog.co/wp-content/uploads/2017/12/noimg.png" alt=""
+                         style="border-radius: 100px;width:48px;height:48px;">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark mx-auto">
-                    <li th:if="${user}" style="text-align: center;"><button type="submit" class="btn btn-primary"><a class="dropdown-item" href="/settings">Налаштування</a></button></li>
-                    <li th:if="${isAdmin}" style="text-align: center;"><button style="width: 100%" type="submit" class="btn btn-primary"><a class="dropdown-item" style="width: 100%" href="/user">User</a></button></li>
+                    <li th:if="${user}" style="text-align: center;">
+                        <button type="submit" class="btn btn-primary"><a class="dropdown-item" href="/settings">Налаштування</a>
+                        </button>
+                    </li>
+                    <li th:if="${isAdmin}" style="text-align: center;">
+                        <button style="width: 100%" type="submit" class="btn btn-primary"><a class="dropdown-item"
+                                                                                             style="width: 100%"
+                                                                                             href="/user">User</a>
+                        </button>
+                    </li>
                     <li th:if="${user}" style="text-align: center">
                         <form th:action="@{/logout}" method="post">
-                            <button style="width: 100%" type="submit" class="btn btn-warning"><k style="color: black" class="dropdown-item">Logout</k></button>
+                            <button style="width: 100%" type="submit" class="btn btn-warning">
+                                <k style="color: black" class="dropdown-item">Logout</k>
+                            </button>
                         </form>
                     </li>
                     <li th:unless="${user}" style="text-align: center">
                         <!--&ensp;-->
-                        <button class="btn btn-primary"><a class="dropdown-item" href="/login" style="color: black">Login</a></button>
+                        <button class="btn btn-primary"><a class="dropdown-item" href="/login" style="color: black">Login</a>
+                        </button>
                     </li>
                     <li th:unless="${user}" style="text-align: center; ">
                         <!--&ensp;-->
-                        <button class="btn btn-warning"><a class="dropdown-item " href="/registration" style="color: black">Register</a></button>
+                        <button class="btn btn-warning"><a class="dropdown-item " href="/registration"
+                                                           style="color: black">Register</a></button>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <!--<label id="switch" class="switch">
+                    <form th:action="@{/switchTheme}" id="theme-form">
+                        <input type="checkbox" name="slider" id="slider" th:checked="${slider}">
+                        <span class="slider round"></span>
+                    </form>
+                </label>
+                <script>
+                    var checkbox = document.getElementById("slider");
+                    checkbox.addEventListener('change', function() {
+                        // Get the form element
+                        var form = document.getElementById("theme-form");
+
+                        // Submit the form
+                        form.submit();
+                        console("Switched");
+                    });
+
+                    var slider = document.getElementById("slider");
+                    slider.addEventListener("change", function() {
+                        document.getElementById("theme-form").submit();
+                    });
+                </script>-->
+
+                <label class="switch">
+                    <form id="themeForm" th:action="@{/switchTheme}">
+                        <input type="hidden" id="themeInput" name="theme" th:value="${theme}">
+                        <input type="checkbox" onchange="switchTheme(this)" th:checked="${theme == 'light'}">
+                        <span class="slider round"></span>
+                    </form>
+                </label>
+                <script>
+                    function switchTheme(checkbox) {
+                        var themeInput = document.getElementById("themeInput");
+                        if (checkbox.checked) {
+                            themeInput.value = "dark";
+                        } else {
+                            themeInput.value = "light";
+                        }
+                        document.getElementById("themeForm").submit();
+                    }
+                </script>
             </li>
         </div>
     </div>
