@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Controller
@@ -48,15 +49,20 @@ public class ProjectsController {
             }
             createTable();
 
-           Iterable<Project> projectsFalse = projectRepo.findAll().stream()
-                   .filter(project -> !project.isInProgress())
-                   .collect(Collectors.toList());
-            model.addAttribute("projectsFalse", projectsFalse);
+            Iterable<Project> projectsFalse = projectRepo.findAll().stream()
+                    .filter(project -> !project.isInProgress())
+                    .collect(Collectors.toList());
+            if (projectsFalse.iterator().hasNext()) {
+                model.addAttribute("projectsFalse", projectsFalse);
+            }
 
             Iterable<Project> projectsTrue = projectRepo.findAll().stream()
                     .filter(Project::isInProgress)
                     .collect(Collectors.toList());
-            model.addAttribute("projectsTrue", projectsTrue);
+            if (projectsTrue.iterator().hasNext()) {
+                model.addAttribute("projectsTrue", projectsTrue);
+            }
+
         } catch (Exception e) {
             log.error("Error in projects: " + e.getMessage());
         }
@@ -65,17 +71,7 @@ public class ProjectsController {
     }
 
     public void createTable() {
-        if (!tableExists("project_links")) {
-            jdbcTemplate.execute("create table project_links(\n" +
-                    "    id LONG PRIMARY KEY AUTO_INCREMENT\n" +
-                    ");");
-        }
-    }
-
-    public boolean tableExists(String tableName) {
-        String sql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = ?";
-        int count = jdbcTemplate.queryForObject(sql, new Object[] { tableName }, Integer.class);
-        return count > 0;
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS project_links(id LONG);");
     }
 
     @GetMapping("/projects/add")
@@ -108,7 +104,7 @@ public class ProjectsController {
 
 
         } catch (Exception e) {
-            log.error("Error in addProject: " + e.getMessage() + " " + e.getStackTrace());
+            log.error("Error in addProject: " + e.getMessage() + " " + Arrays.toString(e.getStackTrace()));
         }
         return "redirect:/projects";
     }
@@ -148,8 +144,8 @@ public class ProjectsController {
     }
 
     @GetMapping("/projects/delete/{id}")
-    public String deleteProject(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model){
-        try{
+    public String deleteProject(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
+        try {
             projectService.deleteProject(id);
 
         } catch (Exception e) {

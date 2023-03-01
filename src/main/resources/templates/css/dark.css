@@ -72,6 +72,11 @@ a{
 .project li::marker {
     color: #EE3737;
 }
+.project_title{
+    color: #E5E7E0;
+    font-size: 30px;
+
+}
 
 /*
 * Navbar

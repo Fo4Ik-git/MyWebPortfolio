@@ -34,14 +34,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/user", "/projects/**", "/src/main/resources/templates/css/**").hasAnyAuthority("ADMIN", "MODERATOR", "USER")
+                                .requestMatchers("/user").hasAnyAuthority("ADMIN", "MODERATOR", "USER")
                                 .requestMatchers("/login").authenticated()
                                 .requestMatchers("/", "/registration", "/activate/*", "/files/users/**", "/projects", "/src/main/resources/templates/css/**").permitAll().anyRequest().authenticated()
                         //"/","/scheme",
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);

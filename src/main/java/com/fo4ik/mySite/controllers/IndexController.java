@@ -6,6 +6,7 @@ import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.config.Config;
+import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,8 +57,6 @@ public class IndexController {
         } catch (Exception e) {
             log.error("Error in index: " + e.getMessage());
         }
-
-
         return "index";
     }
 

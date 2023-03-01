@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.UUID;
 
 @Service
@@ -21,7 +21,7 @@ public class UserService implements UserDetailsService {
     // @Autowired
     private final UserRepo userRepo;
     @Autowired
-    private  MailSender mailSender;
+    private MailSender mailSender;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -42,7 +42,6 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user, @RequestParam("voucher") String voucher) {
-
         User userFromDb = userRepo.findByUsername(user.getUsername());
 
         //Check if user already exist

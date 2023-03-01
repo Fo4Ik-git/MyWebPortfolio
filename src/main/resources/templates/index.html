@@ -5,14 +5,14 @@
 <body class="main">
 <header th:insert="~{fragments/menu.html :: menu}"></header>
 
-<main class="d-flex align-items-center justify-content-center" style="height: 90vh;">
+<main class="d-flex align-items-center justify-content-center" style="height: 90vh;" th:if="${image}">
     <div class="row text-center" style="width: 90%">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5 col-xxl-5">
             <img th:src="${image}" alt="user image" class="img-fluid rounded mx-auto d-block">
         </div>
         <div class="col align-self-center main">
-            <h1 th:utext="${contentUser.getName()}"></h1>
-            <p><h3 th:utext="${contentUser.getDescription()}"></h3></p>
+            <h1 th:utext="${contentUser.getMainTitle()}"></h1>
+            <p><h3 th:utext="${contentUser.getMainDescription()}"></h3></p>
             <div>
                 <button class="btn btn-projects"><a href="/projects">Projects</a></button>
                 <button class="btn btn-cv"><a href="/settings">My CV</a></button>

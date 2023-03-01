@@ -19,7 +19,7 @@ public class User implements UserDetails {
     private String username;
 
 
-    private String  password, name, lastname, email, activationCode, description;
+    private String password, name, mainTitle, email, activationCode, description, mainDescription;
 
     private boolean active;
 
@@ -31,11 +31,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, String name, String lastname, String email, String description, boolean active, Set<Role> roles) {
+    public User(String username, String password, String name, String mainTitle, String mainDescription, String email, String description, boolean active, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.lastname = lastname;
+        this.mainTitle = mainTitle;
+        this.mainDescription = mainDescription;
         this.email = email;
         this.description = description;
         this.active = active;
@@ -123,12 +124,12 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getMainTitle() {
+        return mainTitle;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setMainTitle(String mainTitle) {
+        this.mainTitle = mainTitle;
     }
 
     public String getEmail() {
@@ -147,6 +148,14 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
+    public String getMainDescription() {
+        return mainDescription;
+    }
+
+    public void setMainDescription(String mainDescription) {
+        this.mainDescription = mainDescription;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -154,7 +163,7 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", lastname='" + mainTitle + '\'' +
                 ", email='" + email + '\'' +
                 ", active=" + active +
                 ", roles=" + roles +

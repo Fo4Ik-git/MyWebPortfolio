@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <form th:action="@{/settings/userEdit}" method="post">
-                    <div class="form-group" hidden="">
+                    <div class="form-group" hidden>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Enter name"
                                th:value="${user.getUsername}">
                     </div>
@@ -18,21 +18,22 @@
                                th:value="${user.getName}">
                     </div>
                     <div class="form-group">
-                        <label for="lastname">Lastname</label>
-                        <input type="text" class="form-control" id="lastname" name="lastname"
-                               placeholder="Enter surname"
-                               th:value="${user.getLastname}">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" id="description" name="description"
+                               placeholder="Enter Description"
+                               th:value="${user.getDescription}">
                     </div>
                     <div class="form-group">
-                        <label for="description">Description<span id="count">(1000)</span></label>
-                        <textarea type="text" class="form-control" id="description" name="description"
-                                  placeholder="Enter description"
-                                  th:text="${user.getDescription}" maxlength="1000"></textarea>
+                        <label for="mainTitle">Main Title</label>
+                        <textarea type="text" class="form-control" id="mainTitle" name="mainTitle"
+                                  placeholder="Enter mainTitle"
+                                  th:value="${user.getMainTitle}"></textarea>
                     </div>
-                    <div class="form-group" hidden>
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"
-                               th:value="${user.getEmail}">
+                    <div class="form-group">
+                        <label for="mainDescription">Main Description<span id="count">(1000)</span></label>
+                        <textarea type="text" class="form-control" id="mainDescription" name="mainDescription"
+                                  placeholder="Enter mainDescription"
+                                  th:text="${user.getMainDescription}" maxlength="1000"></textarea>
                     </div>
                     <div class="form-group" hidden>
                         <label for="password">Password</label>

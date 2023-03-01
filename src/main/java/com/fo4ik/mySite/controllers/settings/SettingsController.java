@@ -105,7 +105,9 @@ public class SettingsController {
     }
 
     @PostMapping("/settings/userEdit")
-    public String userEdit(@AuthenticationPrincipal User user,@RequestParam("username") String username, @RequestParam("name") String name, @RequestParam("lastname") String lastname, @RequestParam("description") String description, Model model) {
+    public String userEdit(
+            @AuthenticationPrincipal User user,@RequestParam("username") String username, @RequestParam("name") String name,
+                           @RequestParam("description") String description, @RequestParam("mainTitle") String mainTitle,@RequestParam("mainDescription") String mainDescription, Model model) {
         try {
             User userFromDb = userRepo.findByUsername(username);
             if(userFromDb != null && userFromDb.getId() != user.getId()) {
@@ -114,7 +116,8 @@ public class SettingsController {
             }
             user.setUsername(username);
             user.setName(name);
-            user.setLastname(lastname);
+            user.setMainTitle(mainTitle);
+            user.setMainDescription(mainDescription);
             user.setDescription(description);
             userRepo.save(user);
             log.info("User " + user.getUsername() + " has been edited");
