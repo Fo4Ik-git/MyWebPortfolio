@@ -41,3 +41,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.fo4ik.mySite.MySiteApplication'
+    }
+}
