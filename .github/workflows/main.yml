@@ -1,0 +1,26 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Build 🚀
+        run: ./gradlew build
+
+      - name: Copy 📋
+        run: cp target/my-app-1.0.0.jar docs/
+
+      - name: Commit and push 🔄
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push
