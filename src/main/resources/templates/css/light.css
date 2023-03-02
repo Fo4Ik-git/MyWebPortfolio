@@ -2,6 +2,46 @@ body{
     background-size: auto;
     background-color: aqua;
 }
+a{
+    text-decoration: none;
+}
+
+/* Index page*/
+.main h1 {
+    font-size: 50px;
+    color: black;
+}
+
+.main h3 {
+    color: #E5E7EB;
+}
+
+.btn-cv {
+    background-color: #F2363C;
+}
+
+.btn-projects {
+    background-color: #374151;
+}
+
+.btn-cv, .btn-projects {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+.btn-cv a, .btn-projects a {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.btn-projects a {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.image {
+    border-radius: 50%;
+}
 
 /* The switch - the box around the slider */
 .switch {
@@ -74,4 +114,35 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/*
+* Navbar
+ */
+
+.navbar-custom {
+    background-color: #171721;
+}
+
+.nav-item a {
+    color: #ffffff;
+}
+
+.dropdown-menu li {
+    margin-bottom: 5px;
+}
+
+.menuName {
+    color: #ffffff;
+}
+
+.navbar-collapse li {
+    list-style: none;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+.nav-link{
+    font-size: 20px;
 }

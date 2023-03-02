@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/projects">Projects</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
             </ul>
 
             <li class="nav-item dropdown" th:if="${user}">
@@ -58,47 +61,12 @@
                 </ul>
             </li>
             <li>
-                <!--<label id="switch" class="switch">
-                    <form th:action="@{/switchTheme}" id="theme-form">
-                        <input type="checkbox" name="slider" id="slider" th:checked="${slider}">
-                        <span class="slider round"></span>
-                    </form>
-                </label>
-                <script>
-                    var checkbox = document.getElementById("slider");
-                    checkbox.addEventListener('change', function() {
-                        // Get the form element
-                        var form = document.getElementById("theme-form");
-
-                        // Submit the form
-                        form.submit();
-                        console("Switched");
-                    });
-
-                    var slider = document.getElementById("slider");
-                    slider.addEventListener("change", function() {
-                        document.getElementById("theme-form").submit();
-                    });
-                </script>-->
-
-                <label class="switch">
+               <!-- <label class="switch">
                     <form id="themeForm" th:action="@{/switchTheme}">
-                        <input type="hidden" id="themeInput" name="theme" th:value="${theme}">
-                        <input type="checkbox" onchange="switchTheme(this)" th:checked="${theme == 'light'}">
+                        <input type="checkbox" th:checked="${theme == 'light'}">
                         <span class="slider round"></span>
                     </form>
-                </label>
-                <script>
-                    function switchTheme(checkbox) {
-                        var themeInput = document.getElementById("themeInput");
-                        if (checkbox.checked) {
-                            themeInput.value = "dark";
-                        } else {
-                            themeInput.value = "light";
-                        }
-                        document.getElementById("themeForm").submit();
-                    }
-                </script>
+                </label>-->
             </li>
         </div>
     </div>

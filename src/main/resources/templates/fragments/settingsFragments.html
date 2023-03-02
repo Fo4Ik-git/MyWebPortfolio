@@ -19,15 +19,15 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                               placeholder="Enter Description"
-                               th:value="${user.getDescription}">
+                        <textarea type="text" class="form-control" id="description" name="description"
+                                  placeholder="Enter Description"
+                                  th:text="${user.getDescription}"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="mainTitle">Main Title</label>
                         <textarea type="text" class="form-control" id="mainTitle" name="mainTitle"
                                   placeholder="Enter mainTitle"
-                                  th:value="${user.getMainTitle}"></textarea>
+                                  th:text="${user.getMainTitle}"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="mainDescription">Main Description<span id="count">(1000)</span></label>
@@ -84,6 +84,27 @@
             <div class="modal-body">
                 <form th:action="@{/settings/addProject}" method="post" enctype="multipart/form-data">
                     <input type="file" name="projectFile" id="projectFile">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cvEditModal" tabindex="-1" aria-labelledby="cvEditModalLabel" aria-hidden="true"
+     th:fragment="cvEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="cvEditModalLabel">Add/Change CV</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/settings/uploadCV}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="cvFile" id="cvFile">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -41,10 +42,12 @@ public class ProjectsController {
     }
 
     @GetMapping("/projects")
-    public String projects(@AuthenticationPrincipal User user, Model model) {
+    public String projects(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
         try {
+            Config config = new Config(userRepo, logoRepo);
+
+
             if (user != null) {
-                Config config = new Config(userRepo, logoRepo);
                 config.getUserLogo(user, model);
             }
             createTable();

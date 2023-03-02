@@ -152,4 +152,19 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
+    @PostMapping("/settings/uploadCV")
+    public String uploadCV(@AuthenticationPrincipal User user, @RequestParam("cvFile") MultipartFile file, Model model, Long userId){
+        if(!file.isEmpty()){
+            try{
+                byte[] bytes = file.getBytes();
+                Path path = Path.of("files/users/" + user.getId() + "/cv.pdf") ;
+                Files.write(path, bytes);
+                return "redirect:/settings";
+            } catch (IOException e) {
+                log.error("Error to upload CV: " + e.getMessage());
+            }
+        }
+        return "redirect:/settings";
+    }
+
 }

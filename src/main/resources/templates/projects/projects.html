@@ -11,7 +11,7 @@
 <div class="container">
     <h2 class="project_title" th:if="${projectsFalse}">Ready</h2>
     <div class="row justify-content-center text-center">
-        <div class="col-lg-3 col-md-12 project" th:each="prj : ${projectsFalse}">
+        <div class="col-lg-4 col-md-12 project" th:each="prj : ${projectsFalse}">
 
             <h1 th:text="${prj.getDescription()}"></h1>
             <h4 th:text="${prj.getName()}"></h4>
@@ -43,7 +43,7 @@
 <div class="container">
     <h2 class="project_title" th:if="${projectsTrue}">In Progress</h2>
     <div class="row justify-content-center text-center">
-        <div class="col-lg-3 col-md-12 project" th:each="prj : ${projectsTrue}">
+        <div class="col-lg-4 col-md-12 project" th:each="prj : ${projectsTrue}">
 
             <h1 th:text="${prj.getName()}"></h1>
             <h4 th:text="${prj.getDescription()}"></h4>

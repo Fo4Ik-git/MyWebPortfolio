@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"></head>
+
+<body>
+<header th:insert="~{fragments/menu.html :: menu}"></header>
+<div class="container text-center">
+    <object th:data="${cvPath}" type="application/pdf" width="100%" height="600px">
+        <h1 style="color: white">Unfortunately, your browser does not support viewing PDF files.
+            <button class="btn btn-primary"><a style="color: black" th:href="${cvPath}">Download PDF</a></button>
+            instead.
+        </h1>
+    </object>
+</div>
+<footer th:insert="~{fragments/js :: js}"></footer>
+</body>
+</html>
