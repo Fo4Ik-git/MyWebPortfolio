@@ -1,19 +1,25 @@
 version: '3'
 services:
-  spring-boot-app:
-    build: .
-    depends_on:
-      - mariadb
-    network_mode: bridge
-    ports:
-      - "8080:8080"
-  mariadb:
-    image: mariadb:latest
+  db:
+    image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD:
       MYSQL_DATABASE: mySite
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-    network_mode: bridge
+      MYSQL_ROOT_PASSWORD:
     ports:
       - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/mySite
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
