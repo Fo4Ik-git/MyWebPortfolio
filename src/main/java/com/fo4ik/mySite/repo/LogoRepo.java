@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface LogoRepo extends JpaRepository<Logo, Long> {
     Logo findById(long id);
     Logo findByUser(User userFromDb);
+
+    Logo findByName(String name);
 }

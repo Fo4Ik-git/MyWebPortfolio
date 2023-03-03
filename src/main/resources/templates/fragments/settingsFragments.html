@@ -104,7 +104,14 @@
             </div>
             <div class="modal-body">
                 <form th:action="@{/settings/uploadCV}" method="post" enctype="multipart/form-data">
-                    <input type="file" name="cvFile" id="cvFile">
+                    <div>
+                        <h3>PDF File</h3>
+                        <input type="file" name="cvFile" id="cvFile">
+                    </div>
+                    <div>
+                        <h3>Img File</h3>
+                        <input type="file" name="cvImage" id="cvImage">
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>

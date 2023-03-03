@@ -5,6 +5,7 @@ import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,9 @@ public class UserService implements UserDetailsService {
     private final UserRepo userRepo;
     @Autowired
     private MailSender mailSender;
+
+    @Value("${host}")
+    private String host;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -62,10 +66,18 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
 
         if (!StringUtils.isEmpty(user.getEmail())) {
-            String message = String.format(
+            /*String message = String.format(
                     "Hello, %s! \n" +
                             "Welcome to Vlad Zinkovskyi site. Please, visit next link: <a href=\"http://localhost:9000/activate/%s\">Activation link</a>",
                     user.getUsername(),
+                    user.getActivationCode()
+            );*/
+
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Welcome to Vlad Zinkovskyi site. Please, visit next link: <a href=\"http://$s:9000/activate/%s\">Activation link</a>",
+                    user.getUsername(),
+                    host,
                     user.getActivationCode()
             );
 

@@ -31,10 +31,9 @@ public class Config {
             model.addAttribute("user", user);
             if (user != null) {
                 User userFromDb = userRepo.findByUsername(user.getUsername());
-                Logo logo = logoRepo.findById(userFromDb.getId());
+                Logo logo = logoRepo.findByName("logo");
                 if (!logo.getPath().equals("")) {
                     model.addAttribute("logo", logo.getPath());
-                    // System.out.println("Logo path: " +  logo.getPath());
                 }
                 if (user.isActive()) {
                     model.addAttribute("isActive", true);

@@ -14,9 +14,11 @@ public class Logo {
     public User user;
 
     private String path;
+    private String name;
 
-    public Logo(String path, User user) {
+    public Logo(String path,String name, User user) {
         this.user = user;
+        this.name = name;
         this.path = path;
     }
 
@@ -40,6 +42,14 @@ public class Logo {
 
     public String getPath() {
         return path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPath(String path) {
