@@ -9,21 +9,23 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logoEditModal">
     Edit logo
 </button>
-<!-- Edit User Modal Button trigger -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userEditModal">
-    Edit user data
-</button>
 <!-- Edit CV Modal Button trigger -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cvEditModal">
     Edit CV
 </button>
+<!-- Edit User Modal Button trigger -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userEditModal">
+    Edit user data
+</button>
+
 
 <!--  Edit User Modal -->
 <div th:insert="~{fragments/settingsFragments :: userEdit}"/>
-<!--  Edit Logo Modal -->
-<div th:insert="~{fragments/settingsFragments :: logoEdit}"/>
 <!--  Edit CV Modal -->
 <div th:insert="~{fragments/settingsFragments :: cvEdit}"/>
+<!--  Edit Logo Modal -->
+<div th:insert="~{fragments/settingsFragments :: logoEdit}"/>
+
 
 
 <script>
@@ -35,6 +37,6 @@
         count.innerText = `(${1000 - textarea.value.length})`;
     });
 </script>
-<div th:insert="~{fragments/footer :: js}"/>
+<div th:insert="~{fragments/footer :: footer}"/>
 </body>
 </html>
