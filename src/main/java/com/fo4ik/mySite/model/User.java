@@ -19,7 +19,7 @@ public class User implements UserDetails {
     private String username;
 
 
-    private String password, name, mainTitle, email, activationCode, description, mainDescription;
+    private String password, name, mainTitle, email, activationCode, description, mainDescription, footerDesrciprion;
 
     private boolean active;
 
@@ -31,12 +31,13 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, String name, String mainTitle, String mainDescription, String email, String description, boolean active, Set<Role> roles) {
+    public User(String username, String password, String name, String mainTitle, String mainDescription, String email, String description, String footerDesrciprion, boolean active, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.mainTitle = mainTitle;
         this.mainDescription = mainDescription;
+        this.footerDesrciprion = footerDesrciprion;
         this.email = email;
         this.description = description;
         this.active = active;
@@ -154,6 +155,14 @@ public class User implements UserDetails {
 
     public void setMainDescription(String mainDescription) {
         this.mainDescription = mainDescription;
+    }
+
+    public String getFooterDesrciprion() {
+        return footerDesrciprion;
+    }
+
+    public void setFooterDesrciprion(String footerDesrciprion) {
+        this.footerDesrciprion = footerDesrciprion;
     }
 
     @Override
