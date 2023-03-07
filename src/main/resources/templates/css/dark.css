@@ -1,5 +1,8 @@
 body {
-    background-size: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
     background-image: url("https://wallpapercave.com/wp/wp2757874.gif");
 }
 a{
