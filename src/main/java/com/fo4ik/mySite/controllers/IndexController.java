@@ -6,8 +6,8 @@ import com.fo4ik.mySite.model.Cv;
 import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.CvRepo;
-import com.fo4ik.mySite.repo.UserRepo;
 import com.fo4ik.mySite.service.LogoService;
+import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -28,15 +28,15 @@ import java.nio.file.Paths;
 @Controller
 public class IndexController {
 
-    private final UserRepo userRepo;
     private final LogoService logoService;
+    private final UserService userService;
     private final JdbcTemplate jdbcTemplate;
     private final CvRepo cvRepo;
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    public IndexController(UserRepo userRepo, LogoService logoService, JdbcTemplate jdbcTemplate, CvRepo cvRepo) {
-        this.userRepo = userRepo;
+    public IndexController(LogoService logoService, UserService userService, JdbcTemplate jdbcTemplate, CvRepo cvRepo) {
         this.logoService = logoService;
+        this.userService = userService;
         this.jdbcTemplate = jdbcTemplate;
         this.cvRepo = cvRepo;
     }
@@ -44,7 +44,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(@AuthenticationPrincipal User user, Model model) {
         try {
-            Config config = new Config(userRepo, logoService);
+            Config config = new Config(userService, logoService);
             model.addAttribute("title", "Index page");
             createTable();
             if (user != null) {
@@ -52,7 +52,7 @@ public class IndexController {
                 model.addAttribute("contentUser", user);
             }
 
-            User contentUser = userRepo.findByUsername("fo4ik");
+            User contentUser = userService.getUser("fo4ik");
             Logo contentLogo = logoService.getLogo(contentUser);
             model.addAttribute("image", contentLogo.getPath());
             model.addAttribute("contentUser", contentUser);
@@ -71,7 +71,7 @@ public class IndexController {
     public String cv(@AuthenticationPrincipal User user, Model model) {
         try {
             if (user != null) {
-                Config config = new Config(userRepo, logoService);
+                Config config = new Config(userService, logoService);
                 config.getUserLogo(user, model);
             }
             Cv cv = new Cv();
