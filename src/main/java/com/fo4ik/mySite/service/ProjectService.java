@@ -15,6 +15,13 @@ public class ProjectService {
         this.projectRepo = projectRepo;
     }
 
+    public List<Project> getAll() {
+        return projectRepo.findAll();
+    }
+
+    public Project getProject(long id) {
+        return projectRepo.findById(id);
+    }
 
     public void createProject(String name, String description, boolean inProgress, String util, String link) {
         Project project = new Project(name, description, inProgress, getUtils(util), getLinks(link));

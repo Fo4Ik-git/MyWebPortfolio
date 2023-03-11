@@ -41,7 +41,7 @@ public class UserController {
             for (Role role : roles) {
                 switch (role) {
                     case ADMIN, MODERATOR:
-                        model.addAttribute("users", userService.getAllUsers());
+                        model.addAttribute("users", userService.getAll());
                         break;
                 }
             }

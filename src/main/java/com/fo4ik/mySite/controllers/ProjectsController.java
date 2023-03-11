@@ -3,7 +3,6 @@ package com.fo4ik.mySite.controllers;
 import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Project;
 import com.fo4ik.mySite.model.User;
-import com.fo4ik.mySite.repo.ProjectRepo;
 import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.ProjectService;
 import com.fo4ik.mySite.service.UserService;
@@ -28,13 +27,11 @@ public class ProjectsController {
     private final UserService userService;
 
     private final LogoService logoService;
-    private final ProjectRepo projectRepo;
     private final ProjectService projectService;
 
-    public ProjectsController(UserService userService, LogoService logoService, ProjectRepo projectRepo, ProjectService projectService) {
+    public ProjectsController(UserService userService, LogoService logoService,  ProjectService projectService) {
         this.userService = userService;
         this.logoService = logoService;
-        this.projectRepo = projectRepo;
         this.projectService = projectService;
     }
 
@@ -47,14 +44,14 @@ public class ProjectsController {
                 config.getUserLogo(user, model);
             }
 
-            Iterable<Project> projectsFalse = projectRepo.findAll().stream()
+            Iterable<Project> projectsFalse = projectService.getAll().stream()
                     .filter(project -> !project.isInProgress())
                     .collect(Collectors.toList());
             if (projectsFalse.iterator().hasNext()) {
                 model.addAttribute("projectsFalse", projectsFalse);
             }
 
-            Iterable<Project> projectsTrue = projectRepo.findAll().stream()
+            Iterable<Project> projectsTrue = projectService.getAll().stream()
                     .filter(Project::isInProgress)
                     .collect(Collectors.toList());
             if (projectsTrue.iterator().hasNext()) {
@@ -109,7 +106,7 @@ public class ProjectsController {
         Config config = new Config(userService, logoService);
         config.getUserLogo(user, model);
 
-        Project project = projectRepo.findById(id);
+        Project project = projectService.getProject(id);
         model.addAttribute("project", project);
         model.addAttribute("title", "Edit project");
         return "projects/projectsEdit";
