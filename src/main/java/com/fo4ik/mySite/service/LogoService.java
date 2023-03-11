@@ -26,7 +26,7 @@ public class LogoService {
     public void saveLogo(User user, MultipartFile logoFile) {
 
 
-        if(logoRepo.findByUser(user) == null){
+        if (logoRepo.findByUser(user) == null) {
             createLogo(user, logoFile);
         } else {
             updateLogo(user, logoFile);
@@ -36,6 +36,11 @@ public class LogoService {
     public Logo getLogo(String name) {
         return logoRepo.findByName(name);
     }
+
+    public Logo getLogo(User user) {
+        return logoRepo.findByUser(user);
+    }
+
     public void delete(User user) {
         try {
             Logo logo = logoRepo.findByUser(user);
@@ -45,6 +50,7 @@ public class LogoService {
             log.error("Error to delete logo: " + e.getMessage());
         }
     }
+
     public void delete(Logo logo) {
         try {
             logoRepo.delete(logo);
@@ -63,12 +69,13 @@ public class LogoService {
             log.error("Error to save logo: " + e.getMessage());
         }
     }
+
     private void updateLogo(User user, MultipartFile logoFile) {
-        try{
+        try {
             Path path = createLogoFile(user, logoFile);
             saveLogoInDB(path, user);
             log.info("Logo for user " + user.getUsername() + " has been updated");
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error to update logo: " + e.getMessage());
         }
 
