@@ -5,7 +5,8 @@ body {
     background-attachment: fixed;
     background-image: url("https://wallpapercave.com/wp/wp2757874.gif");
 }
-a{
+
+a {
     text-decoration: none;
 }
 
@@ -32,6 +33,7 @@ a{
     padding: 10px;
     margin: 10px;
 }
+
 .btn-cv a, .btn-projects a {
     color: #ffffff;
     font-size: 30px;
@@ -42,12 +44,45 @@ a{
     font-size: 30px;
 }
 
-.image {
-    border-radius: 50%;
+@media (max-width: 991px) {
+    .main .image {
+        /*margin-top: 30vh;*/
+        height: 60vh;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
+@media (max-width: 903px) {
+    .main .image {
+        /*margin-top: 30vh;*/
+        height: 50vh;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 477px) {
+    .main .image {
+        /*margin-top: 30vh;*/
+        height: 40vh;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 385px) {
+    .main .image {
+        margin-top: 30vh;
+        height: 40vh;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
 /* Projects Add*/
-.projectAddForm label{
+.projectAddForm label {
     color: #ffffff;
 }
 
@@ -55,27 +90,33 @@ a{
 .project h1 {
     color: #E5E7E0;
 }
+
 .project h4 {
     color: #D1D5DB;
 }
-.project li{
+
+.project li {
     color: #9CA3AF;
     margin-left: 20px;
 }
+
 .project {
     margin: 20px;
     background-color: #1F2937;
     padding: 10px;
     border-radius: 10px;
 }
-.project ul{
+
+.project ul {
     margin: 0;
     padding: 0;
 }
+
 .project li::marker {
     color: #EE3737;
 }
-.project_title{
+
+.project_title {
     color: #E5E7E0;
     font-size: 30px;
 
@@ -157,10 +198,14 @@ input:checked + .slider:before {
 /*
 * Navbar
  */
-
-.navbar-custom {
-    background-color: #171721;
+.navbar {
+    margin-bottom: 20px;
 }
+
+.navbar button {
+    background-color: #374151;
+}
+
 
 .nav-item a {
     color: #ffffff;
@@ -181,12 +226,10 @@ input:checked + .slider:before {
 .navbar-nav {
     margin-left: auto;
 }
-.nav-link{
+
+.nav-link {
     font-size: 20px;
 }
-
-
-
 
 
 /*Scroll bar*/
@@ -194,32 +237,40 @@ input:checked + .slider:before {
     width: 7px;
     height: 7px;
 }
+
 ::-webkit-scrollbar-button {
     width: 0px;
     height: 0px;
 }
+
 ::-webkit-scrollbar-thumb {
     background: #171721;
     border: 0px none #ffffff;
     border-radius: 100px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: #f23634;
 }
+
 ::-webkit-scrollbar-thumb:active {
     background: #f23634;
 }
+
 ::-webkit-scrollbar-track {
     background: #171721;
     border: 0px none #ffffff;
     border-radius: 0px;
 }
+
 ::-webkit-scrollbar-track:hover {
     background: #1e222c;
 }
+
 ::-webkit-scrollbar-track:active {
     background: #1e222c;
 }
+
 ::-webkit-scrollbar-corner {
     background: transparent;
 }

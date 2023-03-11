@@ -9,9 +9,14 @@ public class Cv {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    public User user;
+
     String filePath, imgPath;
 
-    public Cv(String filePath, String imgPath) {
+    public Cv(User user,String filePath, String imgPath) {
+        this.user = user;
         this.filePath = filePath;
         this.imgPath = imgPath;
     }
@@ -43,5 +48,11 @@ public class Cv {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -128,6 +128,7 @@ public class SettingsController {
     public String uploadCV(@AuthenticationPrincipal User user, @RequestParam("cvFile") MultipartFile file, @RequestParam("cvImage") MultipartFile image, Model model, Long userId) {
         Path path = Path.of("files/users/" + user.getId() + "/pdf/");
         Cv cv = new Cv();
+        cv.setUser(user);
         try {
 
             if (cvRepo.findById(1) != null) {
