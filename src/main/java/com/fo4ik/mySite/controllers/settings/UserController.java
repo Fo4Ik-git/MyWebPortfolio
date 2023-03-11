@@ -40,10 +40,7 @@ public class UserController {
             List<Role> roles = new ArrayList<>(user.getRoles());
             for (Role role : roles) {
                 switch (role) {
-                    case ADMIN:
-                        model.addAttribute("users", userService.getAllUsers());
-                        break;
-                    case MODERATOR:
+                    case ADMIN, MODERATOR:
                         model.addAttribute("users", userService.getAllUsers());
                         break;
                 }
