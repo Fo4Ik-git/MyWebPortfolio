@@ -24,7 +24,7 @@
             </ul>
 
             <li class="nav-item dropdown" th:if="${user}">
-                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img th:if="${logo}" th:src="@{'/' + ${logo}}" alt="user logo"
                          style="border-radius: 100px;width:48px;height:48px;">
                     <img th:unless="${logo}" src="https://jaylog.co/wp-content/uploads/2017/12/noimg.png" alt=""

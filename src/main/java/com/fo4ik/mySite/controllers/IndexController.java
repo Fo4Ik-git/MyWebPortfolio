@@ -5,6 +5,7 @@ import com.fo4ik.mySite.config.MvcConfig;
 import com.fo4ik.mySite.model.Cv;
 import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.User;
+import com.fo4ik.mySite.service.ConfigService;
 import com.fo4ik.mySite.service.CvService;
 import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.UserService;
@@ -32,13 +33,15 @@ public class IndexController {
     private final UserService userService;
     private final JdbcTemplate jdbcTemplate;
     private final CvService cvService;
+    private final ConfigService configService;
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    public IndexController(LogoService logoService, UserService userService, JdbcTemplate jdbcTemplate, CvService cvService) {
+    public IndexController(LogoService logoService, UserService userService, JdbcTemplate jdbcTemplate, CvService cvService, ConfigService configService) {
         this.logoService = logoService;
         this.userService = userService;
         this.jdbcTemplate = jdbcTemplate;
         this.cvService = cvService;
+        this.configService = configService;
     }
 
     @GetMapping("/")
