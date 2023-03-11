@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class SettingsController {
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
-    private final UserRepo userRepo;
     private final LogoService logoService;
     private final UserService userService;
     private final CvRepo cvRepo;
@@ -30,8 +29,7 @@ public class SettingsController {
     @Value("${user}")
     private String username;
 
-    public SettingsController(UserRepo userRepo, LogoService logoService, UserService userService, CvRepo cvRepo, CvService cvService) {
-        this.userRepo = userRepo;
+    public SettingsController(LogoService logoService, UserService userService, CvRepo cvRepo, CvService cvService) {
         this.logoService = logoService;
         this.userService = userService;
         this.cvRepo = cvRepo;
@@ -42,7 +40,7 @@ public class SettingsController {
     public String settingsPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("title", "Settings");
         try {
-            Config config = new Config(userRepo, logoService);
+            Config config = new Config(userService, logoService);
             //TODO change logoRepo to logoService in config
             config.getUserLogo(user, model);
         } catch (Exception e) {
@@ -60,7 +58,7 @@ public class SettingsController {
                 return "redirect:/settings";
             }
 
-            User userFromDb = userService.findByUsername(user.getUsername());
+            User userFromDb = userService.getUser(user.getUsername());
             logoService.saveLogo(userFromDb, logoFile);
 
             //userRepo.save(userFromDb);
@@ -79,17 +77,17 @@ public class SettingsController {
             @AuthenticationPrincipal User user, @RequestParam("username") String username, @RequestParam("name") String name,
             @RequestParam("description") String description, @RequestParam("mainTitle") String mainTitle, @RequestParam("mainDescription") String mainDescription, Model model) {
         try {
-            User userFromDb = userRepo.findByUsername(username);
+            User userFromDb = userService.getUser(username);
             if (userFromDb != null && userFromDb.getId() != user.getId()) {
                 model.addAttribute("error", "User with this name already exists");
                 return "redirect:/settings";
             }
-            user.setUsername(username);
-            user.setName(name);
-            user.setMainTitle(mainTitle);
-            user.setMainDescription(mainDescription);
-            user.setDescription(description);
-            userRepo.save(user);
+            userFromDb.setUsername(username);
+            userFromDb.setName(name);
+            userFromDb.setMainTitle(mainTitle);
+            userFromDb.setMainDescription(mainDescription);
+            userFromDb.setDescription(description);
+            userService.updateUser(user);
             log.info("User " + user.getUsername() + " has been edited");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -129,7 +127,7 @@ public class SettingsController {
 
             //TODO create Service, in this create checkUser if user ==  null set user = userRepo.findByUsername(user.getUsername());
             if (user == null) {
-                user = userRepo.findByUsername(username);
+                user = userService.getUser(username);
             }
 
             if (!file.isEmpty()) {
