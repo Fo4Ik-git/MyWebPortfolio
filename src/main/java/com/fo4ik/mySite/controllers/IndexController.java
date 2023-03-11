@@ -5,7 +5,7 @@ import com.fo4ik.mySite.config.MvcConfig;
 import com.fo4ik.mySite.model.Cv;
 import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.User;
-import com.fo4ik.mySite.repo.CvRepo;
+import com.fo4ik.mySite.service.CvService;
 import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
@@ -31,14 +31,14 @@ public class IndexController {
     private final LogoService logoService;
     private final UserService userService;
     private final JdbcTemplate jdbcTemplate;
-    private final CvRepo cvRepo;
+    private final CvService cvService;
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    public IndexController(LogoService logoService, UserService userService, JdbcTemplate jdbcTemplate, CvRepo cvRepo) {
+    public IndexController(LogoService logoService, UserService userService, JdbcTemplate jdbcTemplate, CvService cvService) {
         this.logoService = logoService;
         this.userService = userService;
         this.jdbcTemplate = jdbcTemplate;
-        this.cvRepo = cvRepo;
+        this.cvService = cvService;
     }
 
     @GetMapping("/")
@@ -75,9 +75,7 @@ public class IndexController {
                 config.getUserLogo(user, model);
             }
             Cv cv = new Cv();
-            if (cvRepo.findById(1) != null) {
-                cv = cvRepo.findById(1);
-            }
+            cv = cvService.getCv(user);
 
             String filePath = cv.getFilePath();
             if (MvcConfig.isWindows()) {
