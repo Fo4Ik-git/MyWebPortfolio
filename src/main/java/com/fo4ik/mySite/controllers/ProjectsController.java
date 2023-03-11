@@ -31,14 +31,12 @@ public class ProjectsController {
     private final UserRepo userRepo;
     private final LogoService logoService;
     private final ProjectRepo projectRepo;
-    private final JdbcTemplate jdbcTemplate;
     private final ProjectService projectService;
 
-    public ProjectsController(UserRepo userRepo, LogoService logoService, ProjectRepo projectRepo, JdbcTemplate jdbcTemplate, ProjectService projectService) {
+    public ProjectsController(UserRepo userRepo, LogoService logoService, ProjectRepo projectRepo, ProjectService projectService) {
         this.userRepo = userRepo;
         this.logoService = logoService;
         this.projectRepo = projectRepo;
-        this.jdbcTemplate = jdbcTemplate;
         this.projectService = projectService;
     }
 
@@ -47,11 +45,9 @@ public class ProjectsController {
         try {
             Config config = new Config(userRepo, logoService);
 
-
             if (user != null) {
                 config.getUserLogo(user, model);
             }
-            createTable();
 
             Iterable<Project> projectsFalse = projectRepo.findAll().stream()
                     .filter(project -> !project.isInProgress())
@@ -74,9 +70,7 @@ public class ProjectsController {
         return "projects/projects";
     }
 
-    public void createTable() {
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS project_links(id LONG);");
-    }
+
 
     @GetMapping("/projects/add")
     public String addProject(@AuthenticationPrincipal User user, Model model) {
