@@ -1,15 +1,15 @@
 package com.fo4ik.mySite.controllers.settings;
 
 import com.fo4ik.mySite.config.Config;
-import com.fo4ik.mySite.model.Cv;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.CvRepo;
-import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import com.fo4ik.mySite.service.CvService;
 import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 @Controller
 public class SettingsController {
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
@@ -32,12 +25,17 @@ public class SettingsController {
     private final LogoService logoService;
     private final UserService userService;
     private final CvRepo cvRepo;
+    private final CvService cvService;
 
-    public SettingsController(UserRepo userRepo, LogoService logoService, UserService userService, CvRepo cvRepo) {
+    @Value("${user}")
+    private String username;
+
+    public SettingsController(UserRepo userRepo, LogoService logoService, UserService userService, CvRepo cvRepo, CvService cvService) {
         this.userRepo = userRepo;
         this.logoService = logoService;
         this.userService = userService;
         this.cvRepo = cvRepo;
+        this.cvService = cvService;
     }
 
     @GetMapping("/settings")
@@ -125,49 +123,22 @@ public class SettingsController {
     }
 
     @PostMapping("/settings/uploadCV")
-    public String uploadCV(@AuthenticationPrincipal User user, @RequestParam("cvFile") MultipartFile file, @RequestParam("cvImage") MultipartFile image, Model model, Long userId) {
-        Path path = Path.of("files/users/" + user.getId() + "/pdf/");
-        Cv cv = new Cv();
-        cv.setUser(user);
+    public String uploadCV(@AuthenticationPrincipal User user, @RequestParam("cvFile") MultipartFile file, @RequestParam("cvImage") MultipartFile image, Model model) {
+
         try {
 
-            if (cvRepo.findById(1) != null) {
-                cv = cvRepo.findById(1);
+            //TODO create Service, in this create checkUser if user ==  null set user = userRepo.findByUsername(user.getUsername());
+            if (user == null) {
+                user = userRepo.findByUsername(username);
             }
 
             if (!file.isEmpty()) {
-
-
-                byte[] bytes = file.getBytes();
-                String fileName = "cv.pdf";
-                Path filePath = Path.of(path + "/" + fileName);
-                File disk = new File(path.toString());
-                if (!disk.exists()) {
-                    disk.mkdirs();
-                }
-                cv.setFilePath(String.valueOf(filePath));
-                cvRepo.save(cv);
-                Files.write(Path.of(path + "/" + fileName), bytes);
-
+                cvService.saveCv(user, file, false);
             }
             if (!image.isEmpty()) {
-                byte[] bytes = image.getBytes();
-                BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-                Path imagePath = Path.of(path + "/" + "cv.png");
-                File output = new File(String.valueOf(imagePath));
-
-
-                if (logoService.getLogo("cv") != null) {
-                    logoService.delete(logoService.getLogo("cv"));
-                }
-
-                cv.setImgPath(String.valueOf(imagePath));
-                cvRepo.save(cv);
-
-                ImageIO.write(bufferedImage, "png", output);
-
+                cvService.saveCv(user, image, true);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Error to upload CV: " + e.getMessage());
         }
         return "redirect:/settings";

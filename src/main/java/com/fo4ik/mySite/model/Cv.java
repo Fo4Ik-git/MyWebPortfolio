@@ -55,4 +55,8 @@ public class Cv {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Cv orElse(Object o) {
+        return null;
+    }
 }
