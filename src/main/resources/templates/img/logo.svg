@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1080" height="1080" viewBox="0 0 1080 1080" xml:space="preserve">
+<desc>Created with Fabric.js 5.2.4</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 540 540)" id="f6b37622-9fbd-45b1-8d30-22897ef0b3aa"  >
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke"  x="-540" y="-540" rx="0" ry="0" width="1080" height="1080" />
+</g>
+<g transform="matrix(1 0 0 1 540 540)" id="acf70801-66d5-4079-8094-db5c3854b687"  >
+</g>
+<g transform="matrix(16.35 0 0 16.35 540 557.59)" id="text-0"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,25,25); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  transform=" translate(-25.88, 13)" d="M 14.05 -3.85 L 19.7 -20.55 Q 20.2 -22 20.2 -23.25 Q 20.2 -24.5 19.55 -25.5 L 19.55 -25.5 Q 21 -26.35 22.75 -26.35 Q 24.5 -26.35 25.53 -25.45 Q 26.55 -24.55 26.55 -23.18 Q 26.55 -21.8 25.8 -19.9 L 25.8 -19.9 L 19.8 -4.7 Q 18.75 -1.9 17.53 -0.78 Q 16.3 0.35 13.95 0.35 Q 11.6 0.35 10.35 -0.73 Q 9.1 -1.8 8.2 -4.7 L 8.2 -4.7 L 3.1 -20.85 Q 2.35 -23.1 1 -23.7 L 1 -23.7 Q 1.4 -24.9 2.55 -25.63 Q 3.7 -26.35 5.05 -26.35 L 5.05 -26.35 Q 8.8 -26.35 9.7 -22.05 L 9.7 -22.05 L 14.05 -3.85 Z M 50.55 -3.45 L 50.55 -3.45 Q 50.55 0 44.65 0 L 44.65 0 L 35.65 0 Q 33.05 0 31.62 -1.25 Q 30.2 -2.5 30.2 -4.5 Q 30.2 -6.5 32.45 -8.6 L 32.45 -8.6 L 45.2 -21.25 Q 40.45 -20.5 36.9 -20.5 Q 33.35 -20.5 31.97 -21.53 Q 30.6 -22.55 30.6 -23.95 Q 30.6 -25.35 31.45 -26.35 L 31.45 -26.35 Q 33.55 -25.85 36.35 -25.85 L 36.35 -25.85 L 45.35 -25.85 Q 47.95 -25.85 49.35 -24.6 Q 50.75 -23.35 50.75 -21.4 Q 50.75 -19.45 48.5 -17.25 L 48.5 -17.25 L 35.75 -4.55 L 44.75 -4.95 Q 48 -5.1 49.65 -6.3 L 49.65 -6.3 Q 50.55 -5.35 50.55 -3.45 Z" stroke-linecap="round" />
+</g>
+</svg>
