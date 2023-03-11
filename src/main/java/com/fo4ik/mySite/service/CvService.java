@@ -33,7 +33,7 @@ public class CvService {
     }
 
     public Cv getCv(User user) {
-        return cvRepo.findByUser(user).orElse(null);
+        return cvRepo.findByUser(user);
     }
 
     public void saveCv(User user, MultipartFile file, boolean isImage) {

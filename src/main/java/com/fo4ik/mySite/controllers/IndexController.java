@@ -76,7 +76,7 @@ public class IndexController {
             if (user != null) {
                 Config config = new Config(userService, logoService);
                 config.getUserLogo(user, model);
-            }
+            } else user = userService.getUser("fo4ik");
             Cv cv = new Cv();
             cv = cvService.getCv(user);
 
