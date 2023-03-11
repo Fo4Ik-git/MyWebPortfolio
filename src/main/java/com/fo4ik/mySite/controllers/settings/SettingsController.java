@@ -2,17 +2,17 @@ package com.fo4ik.mySite.controllers.settings;
 
 import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Cv;
-import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.CvRepo;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import com.fo4ik.mySite.service.LogoService;
+import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,13 +28,18 @@ import java.nio.file.Path;
 @Controller
 public class SettingsController {
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
-    private final LogoRepo logoRepo;
     private final UserRepo userRepo;
+    private final LogoRepo logoRepo;
+    //TODO delete logoRepo
+    private final LogoService logoService;
+    private final UserService userService;
     private final CvRepo cvRepo;
 
-    public SettingsController(LogoRepo logoRepo, UserRepo userRepo, CvRepo cvRepo) {
+    public SettingsController(UserRepo userRepo, LogoRepo logoRepo, LogoService logoService, UserService userService, CvRepo cvRepo) {
         this.userRepo = userRepo;
         this.logoRepo = logoRepo;
+        this.logoService = logoService;
+        this.userService = userService;
         this.cvRepo = cvRepo;
     }
 
@@ -43,6 +48,7 @@ public class SettingsController {
         model.addAttribute("title", "Settings");
         try {
             Config config = new Config(userRepo, logoRepo);
+            //TODO change logoRepo to logoService in config
             config.getUserLogo(user, model);
         } catch (Exception e) {
             log.error("Error in settings: " + e.getMessage());
@@ -59,19 +65,10 @@ public class SettingsController {
                 return "redirect:/settings";
             }
 
-            Logo logos = logoRepo.findByName("logo");
-            User userFromDb = userRepo.findById(user.getId()).get();
-            if (logos != null) {
-                logos.setPath(saveLogo(user, logoFile, model));
-                logoRepo.save(logos);
-                log.info("Logo for user " + user.getUsername() + " has been changed, new logo: " + logos.getPath());
-            } else {
-                Logo logo = new Logo(saveLogo(user, logoFile, model), "logo", user);
-                logo.setId(user.getId());
-                logoRepo.save(logo);
-                log.info("Logo for user " + user.getUsername() + " has been added, new logo: " + logo.getPath());
-            }
-            userRepo.save(userFromDb);
+            User userFromDb = userService.findByUsername(user.getUsername());
+            logoService.saveLogo(userFromDb, logoFile);
+
+            //userRepo.save(userFromDb);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             log.error("Error to add logo: " + e.getMessage());
@@ -81,35 +78,6 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
-    private String saveLogo(User user, MultipartFile logoFile, Model model) {
-        try {
-            String format = "logo." + StringUtils.getFilenameExtension(logoFile.getOriginalFilename());
-            Path folder = Path.of(createUserFolder(user.getId()) + "/");
-            Path path = folder.resolve(format);
-            Files.write(path, logoFile.getBytes());
-
-            log.info("Logo for user " + user.getUsername() + " has been saved");
-
-            return path.toString();
-        } catch (IOException e) {
-            model.addAttribute("error", e.getMessage());
-            log.error("Error to save logo: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public Path createUserFolder(Long userId) {
-        File file = new File("files/users/" + userId + "/");
-        try {
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            return Path.of(file.getPath());
-        } catch (Exception e) {
-            log.error("Error to create user folder: " + e.getMessage());
-        }
-        return null;
-    }
 
     @PostMapping("/settings/userEdit")
     public String userEdit(
@@ -165,7 +133,7 @@ public class SettingsController {
         Cv cv = new Cv();
         try {
 
-            if (cvRepo.findById(1) != null){
+            if (cvRepo.findById(1) != null) {
                 cv = cvRepo.findById(1);
             }
 
@@ -190,8 +158,8 @@ public class SettingsController {
                 File output = new File(String.valueOf(imagePath));
 
 
-                if (logoRepo.findByName("cv") != null) {
-                    logoRepo.delete(logoRepo.findByName("cv"));
+                if (logoService.getLogo("cv") != null) {
+                    logoService.delete(logoService.getLogo("cv"));
                 }
 
                 cv.setImgPath(String.valueOf(imagePath));

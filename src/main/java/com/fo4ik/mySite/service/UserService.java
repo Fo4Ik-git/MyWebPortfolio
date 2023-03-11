@@ -1,9 +1,12 @@
 package com.fo4ik.mySite.service;
 
 import com.fo4ik.mySite.config.WebSecurityConfig;
+import com.fo4ik.mySite.controllers.settings.SettingsController;
 import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +16,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     // @Autowired
     private final UserRepo userRepo;
     @Autowired
@@ -44,6 +51,9 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
 
     public boolean addUser(User user, @RequestParam("voucher") String voucher) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
@@ -66,13 +76,6 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
 
         if (!StringUtils.isEmpty(user.getEmail())) {
-            /*String message = String.format(
-                    "Hello, %s! \n" +
-                            "Welcome to Vlad Zinkovskyi site. Please, visit next link: <a href=\"http://localhost:9000/activate/%s\">Activation link</a>",
-                    user.getUsername(),
-                    user.getActivationCode()
-            );*/
-
             String message = String.format(
                     "Hello, %s! \n" +
                             "Welcome to Vlad Zinkovskyi site. Please, visit next link: <a href=\"http://$s:9000/activate/%s\">Activation link</a>",
@@ -99,6 +102,23 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         userRepo.save(user);
         return true;
+    }
+
+    public static Path createUserFolder(Long userId) {
+        return getPath(userId, log);
+    }
+
+    private static Path getPath(Long userId, Logger log) {
+        File file = new File("files/users/" + userId + "/");
+        try {
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            return Path.of(file.getPath());
+        } catch (Exception e) {
+            log.error("Error to create user folder: " + e.getMessage());
+        }
+        return null;
     }
 }
 

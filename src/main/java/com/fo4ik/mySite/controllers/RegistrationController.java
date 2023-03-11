@@ -42,7 +42,6 @@ public class RegistrationController {
             }
 
             //Check is fills all fields
-            //TODO: add check for fields
             if (username.equals("") || password.equals("")) {
                 model.addAttribute("message", "Please fill all fields");
                 log.error("User didn't fill all fields");
