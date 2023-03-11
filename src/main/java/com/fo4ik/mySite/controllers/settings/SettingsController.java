@@ -29,15 +29,12 @@ import java.nio.file.Path;
 public class SettingsController {
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
     private final UserRepo userRepo;
-    private final LogoRepo logoRepo;
-    //TODO delete logoRepo
     private final LogoService logoService;
     private final UserService userService;
     private final CvRepo cvRepo;
 
-    public SettingsController(UserRepo userRepo, LogoRepo logoRepo, LogoService logoService, UserService userService, CvRepo cvRepo) {
+    public SettingsController(UserRepo userRepo, LogoService logoService, UserService userService, CvRepo cvRepo) {
         this.userRepo = userRepo;
-        this.logoRepo = logoRepo;
         this.logoService = logoService;
         this.userService = userService;
         this.cvRepo = cvRepo;
@@ -47,7 +44,7 @@ public class SettingsController {
     public String settingsPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("title", "Settings");
         try {
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo, logoService);
             //TODO change logoRepo to logoService in config
             config.getUserLogo(user, model);
         } catch (Exception e) {

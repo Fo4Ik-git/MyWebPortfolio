@@ -8,6 +8,7 @@ import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.CvRepo;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import com.fo4ik.mySite.service.LogoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -28,20 +29,20 @@ import java.nio.file.Paths;
 public class IndexController {
 
     private final UserRepo userRepo;
-    private final LogoRepo logoRepo;
+    private final LogoService logoService;
     private final CvRepo cvRepo;
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
-    public IndexController(UserRepo userRepo, LogoRepo logoRepo, CvRepo cvRepo) {
+    public IndexController(UserRepo userRepo,LogoService logoService, CvRepo cvRepo) {
         this.userRepo = userRepo;
-        this.logoRepo = logoRepo;
+        this.logoService = logoService;
         this.cvRepo = cvRepo;
     }
 
     @GetMapping("/")
     public String index(@AuthenticationPrincipal User user, Model model) {
         try {
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo, logoService);
             model.addAttribute("title", "Index page");
 
             if (user != null) {
@@ -50,7 +51,7 @@ public class IndexController {
             }
 
             User contentUser = userRepo.findByUsername("fo4ik");
-            Logo contentLogo = logoRepo.findByUser(contentUser);
+            Logo contentLogo = logoService.getLogo(contentUser);
             model.addAttribute("image", contentLogo.getPath());
             model.addAttribute("contentUser", contentUser);
         } catch (Exception e) {
@@ -63,7 +64,7 @@ public class IndexController {
     public String cv(@AuthenticationPrincipal User user, Model model) {
         try {
             if (user != null) {
-                Config config = new Config(userRepo, logoRepo);
+                Config config = new Config(userRepo,logoService);
                 config.getUserLogo(user, model);
             }
             Cv cv = new Cv();

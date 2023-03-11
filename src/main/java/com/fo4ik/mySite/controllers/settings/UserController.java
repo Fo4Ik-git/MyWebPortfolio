@@ -5,6 +5,7 @@ import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import com.fo4ik.mySite.service.LogoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,17 +24,17 @@ public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserRepo userRepo;
-    private final LogoRepo logoRepo;
+    private final LogoService logoService;
 
-    public UserController(UserRepo userRepo, LogoRepo logoRepo) {
+    public UserController(UserRepo userRepo, LogoService logoService) {
         this.userRepo = userRepo;
-        this.logoRepo = logoRepo;
+        this.logoService = logoService;
     }
 
     @GetMapping
     public String userList(@AuthenticationPrincipal User user, Model model) {
         try {
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("user", user);
 
@@ -61,7 +62,7 @@ public class UserController {
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, @AuthenticationPrincipal User userLogo, Model model) {
         try {
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo,logoService);
             config.getUserLogo(userLogo, model);
 
             model.addAttribute("user", user);

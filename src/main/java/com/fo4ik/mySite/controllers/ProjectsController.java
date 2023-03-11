@@ -6,6 +6,7 @@ import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.ProjectRepo;
 import com.fo4ik.mySite.repo.UserRepo;
+import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,14 +29,14 @@ public class ProjectsController {
     private static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
 
     private final UserRepo userRepo;
-    private final LogoRepo logoRepo;
+    private final LogoService logoService;
     private final ProjectRepo projectRepo;
     private final JdbcTemplate jdbcTemplate;
     private final ProjectService projectService;
 
-    public ProjectsController(UserRepo userRepo, LogoRepo logoRepo, ProjectRepo projectRepo, JdbcTemplate jdbcTemplate, ProjectService projectService) {
+    public ProjectsController(UserRepo userRepo, LogoService logoService, ProjectRepo projectRepo, JdbcTemplate jdbcTemplate, ProjectService projectService) {
         this.userRepo = userRepo;
-        this.logoRepo = logoRepo;
+        this.logoService = logoService;
         this.projectRepo = projectRepo;
         this.jdbcTemplate = jdbcTemplate;
         this.projectService = projectService;
@@ -44,7 +45,7 @@ public class ProjectsController {
     @GetMapping("/projects")
     public String projects(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
         try {
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo, logoService);
 
 
             if (user != null) {
@@ -79,7 +80,7 @@ public class ProjectsController {
 
     @GetMapping("/projects/add")
     public String addProject(@AuthenticationPrincipal User user, Model model) {
-        Config config = new Config(userRepo, logoRepo);
+        Config config = new Config(userRepo, logoService);
         config.getUserLogo(user, model);
         model.addAttribute("title", "Add project");
         return "projects/projectAdd";
@@ -95,7 +96,7 @@ public class ProjectsController {
                 model.addAttribute("message", "Please fill all fields");
                 return "redirect:/projects/add";
             }
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("title", "Add project");
 
@@ -114,7 +115,7 @@ public class ProjectsController {
 
     @GetMapping("/projects/edit/{id}")
     public String editProject(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
-        Config config = new Config(userRepo, logoRepo);
+        Config config = new Config(userRepo, logoService);
         config.getUserLogo(user, model);
 
         Project project = projectRepo.findById(id);
@@ -130,7 +131,7 @@ public class ProjectsController {
             @RequestParam("InputDescription") String description, @RequestParam("InputLinks") String link,
             @RequestParam("InputUtils") String util, boolean inProgress) {
         try {
-            Config config = new Config(userRepo, logoRepo);
+            Config config = new Config(userRepo, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("title", "Edit project");
 
