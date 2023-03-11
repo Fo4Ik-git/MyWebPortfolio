@@ -1,7 +1,6 @@
 package com.fo4ik.mySite.service;
 
 import com.fo4ik.mySite.config.WebSecurityConfig;
-import com.fo4ik.mySite.controllers.settings.SettingsController;
 import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.UserRepo;
@@ -19,7 +18,7 @@ import org.thymeleaf.util.StringUtils;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Collections;
-import java.util.EnumSet;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,11 +40,13 @@ public class UserService implements UserDetailsService {
     public User getUser(String username) {
         return userRepo.findByUsername(username);
     }
+
     public User getUser(Long id) {
         return userRepo.findById(id).orElse(null);
     }
-    public User getAllUsers() {
-        return userRepo.findAll().stream().findFirst().orElse(null);
+
+    public List<User> getAll() {
+        return userRepo.findAll();
     }
 
     public Role getRole(String username, String roleName) {
