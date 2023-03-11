@@ -118,6 +118,10 @@ a {
     color: #EE3737;
 }
 
+.project_div{
+    margin: 0px 2vh 2vh 0px;
+}
+
 .project_title {
     color: #E5E7E0;
     font-size: 30px;
