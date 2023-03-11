@@ -38,6 +38,13 @@ public class UserService implements UserDetailsService {
         this.userRepo = userRepo;
     }
 
+    public User getUser(String username) {
+        return userRepo.findByUsername(username);
+    }
+    public User getUser(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
     public Role getRole(String username, String roleName) {
         User user = userRepo.findByUsername(username);
         return user.getRoles().stream().filter(role -> role.name().equals(roleName)).findFirst().orElse(null);
@@ -50,9 +57,6 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         return user;
-    }
-    public User findByUsername(String username) {
-        return userRepo.findByUsername(username);
     }
 
     public boolean addUser(User user, @RequestParam("voucher") String voucher) {
@@ -88,6 +92,10 @@ public class UserService implements UserDetailsService {
         }
 
         return true;
+    }
+
+    public void updateUser(User user) {
+        userRepo.save(user);
     }
 
     public boolean activateUser(String code) {
