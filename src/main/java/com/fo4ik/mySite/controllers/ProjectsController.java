@@ -3,14 +3,12 @@ package com.fo4ik.mySite.controllers;
 import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Project;
 import com.fo4ik.mySite.model.User;
-import com.fo4ik.mySite.repo.LogoRepo;
 import com.fo4ik.mySite.repo.ProjectRepo;
-import com.fo4ik.mySite.repo.UserRepo;
 import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.ProjectService;
+import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +25,14 @@ import java.util.stream.Collectors;
 public class ProjectsController {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
+    private final UserService userService;
 
-    private final UserRepo userRepo;
     private final LogoService logoService;
     private final ProjectRepo projectRepo;
     private final ProjectService projectService;
 
-    public ProjectsController(UserRepo userRepo, LogoService logoService, ProjectRepo projectRepo, ProjectService projectService) {
-        this.userRepo = userRepo;
+    public ProjectsController(UserService userService, LogoService logoService, ProjectRepo projectRepo, ProjectService projectService) {
+        this.userService = userService;
         this.logoService = logoService;
         this.projectRepo = projectRepo;
         this.projectService = projectService;
@@ -43,7 +41,7 @@ public class ProjectsController {
     @GetMapping("/projects")
     public String projects(@AuthenticationPrincipal User user, Model model, RedirectAttributes redirectAttributes) {
         try {
-            Config config = new Config(userRepo, logoService);
+            Config config = new Config(userService, logoService);
 
             if (user != null) {
                 config.getUserLogo(user, model);
@@ -71,10 +69,9 @@ public class ProjectsController {
     }
 
 
-
     @GetMapping("/projects/add")
     public String addProject(@AuthenticationPrincipal User user, Model model) {
-        Config config = new Config(userRepo, logoService);
+        Config config = new Config(userService, logoService);
         config.getUserLogo(user, model);
         model.addAttribute("title", "Add project");
         return "projects/projectAdd";
@@ -90,7 +87,7 @@ public class ProjectsController {
                 model.addAttribute("message", "Please fill all fields");
                 return "redirect:/projects/add";
             }
-            Config config = new Config(userRepo, logoService);
+            Config config = new Config(userService, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("title", "Add project");
 
@@ -109,7 +106,7 @@ public class ProjectsController {
 
     @GetMapping("/projects/edit/{id}")
     public String editProject(@AuthenticationPrincipal User user, @PathVariable(value = "id") long id, Model model) {
-        Config config = new Config(userRepo, logoService);
+        Config config = new Config(userService, logoService);
         config.getUserLogo(user, model);
 
         Project project = projectRepo.findById(id);
@@ -125,7 +122,7 @@ public class ProjectsController {
             @RequestParam("InputDescription") String description, @RequestParam("InputLinks") String link,
             @RequestParam("InputUtils") String util, boolean inProgress) {
         try {
-            Config config = new Config(userRepo, logoService);
+            Config config = new Config(userService, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("title", "Edit project");
 

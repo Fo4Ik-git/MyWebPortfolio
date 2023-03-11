@@ -3,9 +3,8 @@ package com.fo4ik.mySite.controllers.settings;
 import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Role;
 import com.fo4ik.mySite.model.User;
-import com.fo4ik.mySite.repo.LogoRepo;
-import com.fo4ik.mySite.repo.UserRepo;
 import com.fo4ik.mySite.service.LogoService;
+import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,18 +22,18 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private final UserRepo userRepo;
+    private final UserService userService;
     private final LogoService logoService;
 
-    public UserController(UserRepo userRepo, LogoService logoService) {
-        this.userRepo = userRepo;
+    public UserController(UserService userService, LogoService logoService) {
+        this.userService = userService;
         this.logoService = logoService;
     }
 
     @GetMapping
     public String userList(@AuthenticationPrincipal User user, Model model) {
         try {
-            Config config = new Config(userRepo, logoService);
+            Config config = new Config(userService, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("user", user);
 
@@ -42,10 +41,10 @@ public class UserController {
             for (Role role : roles) {
                 switch (role) {
                     case ADMIN:
-                        model.addAttribute("users", userRepo.findAll());
+                        model.addAttribute("users", userService.getAllUsers());
                         break;
                     case MODERATOR:
-                        model.addAttribute("users", userRepo.findAll());
+                        model.addAttribute("users", userService.getAllUsers());
                         break;
                 }
             }
@@ -62,7 +61,7 @@ public class UserController {
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, @AuthenticationPrincipal User userLogo, Model model) {
         try {
-            Config config = new Config(userRepo,logoService);
+            Config config = new Config(userService,logoService);
             config.getUserLogo(userLogo, model);
 
             model.addAttribute("user", user);
@@ -98,7 +97,7 @@ public class UserController {
                 }
             }
 
-            userRepo.save(user);
+            userService.updateUser(user);
         } catch (Exception e) {
             log.error("Error in userSave method: " + e.getMessage());
         }

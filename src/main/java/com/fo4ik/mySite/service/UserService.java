@@ -44,6 +44,9 @@ public class UserService implements UserDetailsService {
     public User getUser(Long id) {
         return userRepo.findById(id).orElse(null);
     }
+    public User getAllUsers() {
+        return userRepo.findAll().stream().findFirst().orElse(null);
+    }
 
     public Role getRole(String username, String roleName) {
         User user = userRepo.findByUsername(username);

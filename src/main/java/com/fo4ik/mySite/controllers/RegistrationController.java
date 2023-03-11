@@ -17,11 +17,9 @@ public class RegistrationController {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
     private final UserService userService;
-    private final UserRepo userRepo;
 
-    public RegistrationController(UserService userService, UserRepo userRepo) {
+    public RegistrationController(UserService userService) {
         this.userService = userService;
-        this.userRepo = userRepo;
     }
 
     @GetMapping("/registration")
@@ -67,7 +65,7 @@ public class RegistrationController {
                 model.addAttribute("message", "User successfully activated");
                 log.info("User: " + user.getUsername() + " successfully activated");
                 user.setActive(true);
-                userRepo.save(user);
+                userService.updateUser(user);
             } else {
                 model.addAttribute("message", "Activation code is not found!");
                 log.error("Activation code for user: " + user.getUsername() + " is not found!");
