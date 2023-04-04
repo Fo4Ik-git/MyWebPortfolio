@@ -7,15 +7,12 @@ plugins {
 group = 'com.fo4ik'
 version = '0.0.1'
 sourceCompatibility = '17'
+archivesBaseName = 'mySite'
 
 repositories {
     mavenCentral()
 }
 
-bootJar {
-    launchScript()
-    requiresUnpack '**/cerfiticate.p12'
-}
 
 dependencies {
     //Spring start
