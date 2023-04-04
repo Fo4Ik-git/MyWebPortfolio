@@ -15,16 +15,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@RequestMapping("/settings")
 public class SettingsController {
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
     private final LogoService logoService;
     private final UserService userService;
     private final CvRepo cvRepo;
     private final CvService cvService;
+
+    private String redirect = "redirect:/settings";
+    private String settings = "/pages/settings/settings";
 
     @Value("${user}")
     private String username;
@@ -36,7 +41,7 @@ public class SettingsController {
         this.cvService = cvService;
     }
 
-    @GetMapping("/settings")
+    @GetMapping("")
     public String settingsPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("title", "Settings");
         try {
@@ -46,33 +51,31 @@ public class SettingsController {
         } catch (Exception e) {
             log.error("Error in settings: " + e.getMessage());
         }
-        return "pages/settings/settings";
+        return settings;
     }
 
-    @PostMapping("/settings/addLogo")
+    @PostMapping("/addLogo")
     public String addLogo(@AuthenticationPrincipal User user, @RequestParam("logoFile") MultipartFile logoFile, Model model) {
         try {
             if (logoFile.getOriginalFilename().equals("")) {
                 model.addAttribute("error", "File is empty");
                 log.error("Error to add logo: File is empty");
-                return "redirect:/settings";
+                return redirect;
             }
-
             User userFromDb = userService.getUser(user.getUsername());
             logoService.saveLogo(userFromDb, logoFile);
-
             //userRepo.save(userFromDb);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             log.error("Error to add logo: " + e.getMessage());
-            return "redirect:/scheme";
+            return redirect;
         }
 
-        return "redirect:/settings";
+        return redirect;
     }
 
 
-    @PostMapping("/settings/userEdit")
+    @PostMapping("/userEdit")
     public String userEdit(
             @AuthenticationPrincipal User user, @RequestParam("username") String username, @RequestParam("name") String name,
             @RequestParam("description") String description, @RequestParam("mainTitle") String mainTitle, @RequestParam("mainDescription") String mainDescription, Model model) {
@@ -80,7 +83,7 @@ public class SettingsController {
             User userFromDb = userService.getUser(username);
             if (userFromDb != null && userFromDb.getId() != user.getId()) {
                 model.addAttribute("error", "User with this name already exists");
-                return "redirect:/settings";
+                return redirect;
             }
             userFromDb.setUsername(username);
             userFromDb.setName(name);
@@ -93,7 +96,7 @@ public class SettingsController {
             model.addAttribute("error", e.getMessage());
             log.error("Error to edit user: " + e.getMessage());
         }
-        return "redirect:/settings";
+        return redirect;
     }
 
     @PostMapping("/settings/addProject")
@@ -102,12 +105,12 @@ public class SettingsController {
             if (projectName.equals("")) {
                 model.addAttribute("error", "Project name is empty");
                 log.error("Error to add project: Project name is empty");
-                return "redirect:/settings";
+                return redirect;
             }
             if (projectDescription.equals("")) {
                 model.addAttribute("error", "Project description is empty");
                 log.error("Error to add project: Project description is empty");
-                return "redirect:/settings";
+                return redirect;
             }
             // Projects project = new Projects(projectName, projectDescription, user);
             //projectsRepo.save(project);
@@ -115,9 +118,9 @@ public class SettingsController {
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             log.error("Error to add project: " + e.getMessage());
-            return "redirect:/settings";
+            return redirect;
         }
-        return "redirect:/settings";
+        return redirect;
     }
 
     @PostMapping("/settings/uploadCV")
@@ -139,7 +142,7 @@ public class SettingsController {
         } catch (Exception e) {
             log.error("Error to upload CV: " + e.getMessage());
         }
-        return "redirect:/settings";
+        return redirect;
     }
 
 }
