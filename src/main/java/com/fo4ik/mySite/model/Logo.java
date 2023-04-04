@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 public class Logo {
-
-
     @Id
-    private Long id;
+    @Column(name = "id", nullable = false)
+    private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     public User user;
 
@@ -36,7 +35,7 @@ public class Logo {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -54,5 +53,15 @@ public class Logo {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Logo{" +
+                "user=" + user.getUsername() +
+                ", path='" + path + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -63,7 +63,9 @@ public class LogoService {
     private void createLogo(User user, MultipartFile logoFile) {
         try {
             Path path = createLogoFile(user, logoFile);
-            saveLogoInDB(path, user);
+            String name = "logo." + StringUtils.getFilenameExtension(logoFile.getOriginalFilename());
+            Logo logo = new Logo(path.toString(), name, user);
+            saveLogoInDB(logo, user);
             log.info("Logo for user " + user.getUsername() + " has been saved");
         } catch (Exception e) {
             log.error("Error to save logo: " + e.getMessage());
@@ -77,15 +79,16 @@ public class LogoService {
             log.info("Logo for user " + user.getUsername() + " has been updated");
         } catch (Exception e) {
             log.error("Error to update logo: " + e.getMessage());
+
         }
 
     }
 
     private Path createLogoFile(User user, MultipartFile logoFile) {
         try {
-            String format = "logo." + StringUtils.getFilenameExtension(logoFile.getOriginalFilename());
+            String name = "logo." + StringUtils.getFilenameExtension(logoFile.getOriginalFilename());
             Path folder = Path.of(UserService.createUserFolder(user.getId()) + "/");
-            Path path = folder.resolve(format);
+            Path path = folder.resolve(name);
             Files.write(path, logoFile.getBytes());
             return path;
         } catch (Exception e) {
@@ -98,6 +101,14 @@ public class LogoService {
         try {
             Logo logo = logoRepo.findByUser(user);
             logo.setPath(saveLogoPath.toString());
+            logoRepo.save(logo);
+        } catch (Exception e) {
+            log.warn("Error to save logo in DB: " + e.getMessage());
+        }
+    }
+
+    private void saveLogoInDB(Logo logo, User user) {
+        try {
             logoRepo.save(logo);
         } catch (Exception e) {
             log.warn("Error to save logo in DB: " + e.getMessage());
