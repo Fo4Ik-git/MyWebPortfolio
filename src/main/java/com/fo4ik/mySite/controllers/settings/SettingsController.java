@@ -78,7 +78,7 @@ public class SettingsController {
     @PostMapping("/userEdit")
     public String userEdit(
             @AuthenticationPrincipal User user, @RequestParam("username") String username, @RequestParam("name") String name,
-            @RequestParam("description") String description, @RequestParam("mainTitle") String mainTitle, @RequestParam("mainDescription") String mainDescription, Model model) {
+            @RequestParam("description") String description,  String mainTitle, @RequestParam("mainDescription") String mainDescription, Model model) {
         try {
             User userFromDb = userService.getUser(username);
             if (userFromDb != null && userFromDb.getId() != user.getId()) {
@@ -90,7 +90,7 @@ public class SettingsController {
             userFromDb.setMainTitle(mainTitle);
             userFromDb.setMainDescription(mainDescription);
             userFromDb.setDescription(description);
-            userService.updateUser(user);
+            userService.updateUser(userFromDb);
             log.info("User " + user.getUsername() + " has been edited");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
