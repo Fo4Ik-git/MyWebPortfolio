@@ -12,6 +12,11 @@ repositories {
     mavenCentral()
 }
 
+bootJar {
+    launchScript()
+    requiresUnpack '**/cerfiticate.p12'
+}
+
 dependencies {
     //Spring start
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -38,6 +43,9 @@ dependencies {
     //Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    //SSL
+
 }
 
 tasks.named('test') {

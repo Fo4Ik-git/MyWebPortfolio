@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig{
 
     //@Autowired
     private final UserService userService;
@@ -33,6 +33,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers("/user").hasAnyAuthority("ADMIN", "MODERATOR", "USER")
                                 .requestMatchers("/login").authenticated()
@@ -44,7 +45,11 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll);
+                .logout(LogoutConfigurer::permitAll)
+                .requiresChannel()
+                .requestMatchers(r->
+                        r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
 
         return http.build();
     }
