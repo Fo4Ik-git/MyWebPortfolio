@@ -45,7 +45,7 @@ public class AboutController {
         } catch (Exception e) {
             log.error("Error in about: " + e.getMessage());
         }
-        return "about";
+        return "pages/about";
     }
 
 }

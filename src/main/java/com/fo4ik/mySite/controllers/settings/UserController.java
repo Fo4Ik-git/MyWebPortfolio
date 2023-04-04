@@ -51,7 +51,7 @@ public class UserController {
 
         //model.addAttribute("users", userRepo.findAll());
         model.addAttribute("title", "User list");
-        return "settings/userList";
+        return "pages/settings/userList";
     }
 
     // This getMaping is for user profile, it`s been /user/{id}

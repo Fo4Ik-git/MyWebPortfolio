@@ -62,7 +62,7 @@ public class IndexController {
         } catch (Exception e) {
             log.error("Error in index: " + e.getMessage());
         }
-        return "index";
+        return "pages/index";
     }
 
     public void createTable() {
@@ -92,10 +92,11 @@ public class IndexController {
         } catch (Exception e) {
             log.error("Error in cv: " + e.getMessage());
         }
-        return "cv";
+        return "pages/cv";
     }
 
 
+    // Download Cv file
     @GetMapping("/download")
     public ResponseEntity<Resource> downloadFile(@RequestParam("path") String filePath) {
         Path path = Paths.get(System.getProperty("user.dir") + filePath);

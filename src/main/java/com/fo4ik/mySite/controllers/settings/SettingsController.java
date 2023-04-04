@@ -46,7 +46,7 @@ public class SettingsController {
         } catch (Exception e) {
             log.error("Error in settings: " + e.getMessage());
         }
-        return "settings/settings";
+        return "pages/settings/settings";
     }
 
     @PostMapping("/settings/addLogo")

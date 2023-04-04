@@ -62,7 +62,7 @@ public class ProjectsController {
             log.error("Error in projects: " + e.getMessage());
         }
 
-        return "projects/projects";
+        return "pages/projects/projects";
     }
 
 
@@ -71,7 +71,7 @@ public class ProjectsController {
         Config config = new Config(userService, logoService);
         config.getUserLogo(user, model);
         model.addAttribute("title", "Add project");
-        return "projects/projectAdd";
+        return "pages/projects/projectAdd";
     }
 
     @PostMapping("/projects/add")
@@ -109,7 +109,7 @@ public class ProjectsController {
         Project project = projectService.getProject(id);
         model.addAttribute("project", project);
         model.addAttribute("title", "Edit project");
-        return "projects/projectsEdit";
+        return "pages/projects/projectsEdit";
     }
 
     @PostMapping("/projects/edit/{id}")

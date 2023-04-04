@@ -1,15 +1,19 @@
+/*Global*/
 body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
     background-attachment: fixed;
     background-image: url("https://wallpapercave.com/wp/wp2757874.gif");
-
-
 }
 
 a {
     text-decoration: none;
+    color: #000000;
+}
+
+.button{
+ color: black;
 }
 
 /* Index page*/

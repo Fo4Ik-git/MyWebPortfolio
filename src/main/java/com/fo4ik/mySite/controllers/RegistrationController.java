@@ -1,7 +1,6 @@
 package com.fo4ik.mySite.controllers;
 
 import com.fo4ik.mySite.model.User;
-import com.fo4ik.mySite.repo.UserRepo;
 import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("title", "Registration");
-        return "registration";
+        return "pages/registration";
     }
 
     @PostMapping("/registration")
@@ -77,6 +76,6 @@ public class RegistrationController {
             return "redirect:/errorPage";
         }
 
-        return "login";
+        return "pages/login";
     }
 }

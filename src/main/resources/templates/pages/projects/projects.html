@@ -4,8 +4,8 @@
 <body>
 <header th:insert="~{fragments/menu.html :: menu}"></header>
 
-<button th:if="${isActive}"><a href="/projects/add">Project Add</a></button>
-<button th:if="${isActive}"><a href="/projects/edit">Project edit</a></button>
+<button class="btn btn-success" th:if="${isActive}" type="button"><a href="/projects/add">Project Add</a></button>
+<button class="btn btn-warning" th:if="${isActive}" type="button"><a href="/projects/edit">Project edit</a></button>
 
 
 <div class="container">
@@ -19,17 +19,19 @@
                 <li th:text="${util}"></li>
             </ul>
             <ul class="list-group list-group-horizontal text-center" style="list-style: none;">
-                <li th:each="link : ${prj.getLinks()}" style="margin: 10px; ">
+                <li style="margin: 10px; " th:each="link : ${prj.getLinks()}">
                     <a th:href="${link.getKey()}">
-                        <img th:src="${link.getValue()}" alt="Link image" style="height: 30px">
+                        <img alt="Link image" style="height: 30px" th:src="${link.getValue()}">
                     </a>
                 </li>
                 <li>
-                    <button class="btn btn-primary" th:if="${isUser}"><a th:href="@{'/projects/edit/' + ${prj.getId()}}">Edit</a>
+                    <button class="btn btn-primary" th:if="${isUser}"><a
+                            th:href="@{'/projects/edit/' + ${prj.getId()}}">Edit</a>
                     </button>
                 </li>
                 <li>
-                    <button class="btn btn-danger" th:if="${isUser}"><a th:href="@{'/projects/delete/' + ${prj.getId()}}">Delete</a>
+                    <button class="btn btn-danger" th:if="${isUser}"><a
+                            th:href="@{'/projects/delete/' + ${prj.getId()}}">Delete</a>
                     </button>
                 </li>
             </ul>
@@ -51,17 +53,19 @@
                 <li th:text="${util}"></li>
             </ul>
             <ul class="list-group list-group-horizontal text-center" style="list-style: none;">
-                <li th:each="link : ${prj.getLinks()}" style="margin: 10px; ">
+                <li style="margin: 10px; " th:each="link : ${prj.getLinks()}">
                     <a th:href="${link.getKey()}">
-                        <img th:src="${link.getValue()}" alt="Link image" style="height: 30px">
+                        <img alt="Link image" style="height: 30px" th:src="${link.getValue()}">
                     </a>
                 </li>
                 <li>
-                    <button class="btn btn-primary" th:if="${isUser}"><a th:href="@{'/projects/edit/' + ${prj.getId()}}">Edit</a>
+                    <button class="btn btn-primary" th:if="${isUser}"><a
+                            th:href="@{'/projects/edit/' + ${prj.getId()}}">Edit</a>
                     </button>
                 </li>
                 <li>
-                    <button class="btn btn-danger" th:if="${isUser}"><a th:href="@{'/projects/delete/' + ${prj.getId()}}">Delete</a>
+                    <button class="btn btn-danger" th:if="${isUser}"><a
+                            th:href="@{'/projects/delete/' + ${prj.getId()}}">Delete</a>
                     </button>
                 </li>
             </ul>
@@ -71,6 +75,6 @@
 
 <!--<h2 class="project_title" th:unless="${projectsTrue and projectsFalse}">Unfortunately nothing 😟</h2>-->
 
-    <footer th:insert="~{fragments/footer :: footer}"></footer>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
 </body>
 </html>
