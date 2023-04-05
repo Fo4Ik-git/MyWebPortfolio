@@ -29,7 +29,7 @@ public class SettingsController {
     private final CvService cvService;
 
     private String redirect = "redirect:/settings";
-    private String settings = "/pages/settings/settings";
+    private String settings = "pages/settings/settings";
 
     @Value("${user}")
     private String username;
@@ -99,7 +99,7 @@ public class SettingsController {
         return redirect;
     }
 
-    @PostMapping("/settings/addProject")
+    @PostMapping("/addProject")
     public String addProject(@AuthenticationPrincipal User user, @RequestParam("projectName") String projectName, @RequestParam("projectDescription") String projectDescription, Model model) {
         try {
             if (projectName.equals("")) {
@@ -123,7 +123,7 @@ public class SettingsController {
         return redirect;
     }
 
-    @PostMapping("/settings/uploadCV")
+    @PostMapping("/uploadCV")
     public String uploadCV(@AuthenticationPrincipal User user, @RequestParam("cvFile") MultipartFile file, @RequestParam("cvImage") MultipartFile image, Model model) {
 
         try {
@@ -145,4 +145,5 @@ public class SettingsController {
         return redirect;
     }
 
+    //TODO push this v to server
 }
