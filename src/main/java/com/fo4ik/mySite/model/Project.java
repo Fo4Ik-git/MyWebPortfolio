@@ -16,6 +16,10 @@ public class Project {
     @Column(name = "id", nullable = false, updatable = false)
     private long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    public User user;
+
     @Column(nullable = false)
     private String name;
 
@@ -33,12 +37,13 @@ public class Project {
     @CollectionTable(name = "project_links", joinColumns = {@JoinColumn(name = "project_id", referencedColumnName = "id")})
     Map<String, String> links = new HashMap<>();
 
-    public Project(String name, String description, boolean inProgress, List<String> utils, Map<String, String> links) {
+    public Project(String name, String description, boolean inProgress, List<String> utils, Map<String, String> links, User user) {
         this.name = name;
         this.description = description;
         this.inProgress = inProgress;
         this.utils = utils;
         this.links = links;
+        this.user = user;
     }
 
     public Project(String name, String description, boolean inProgress, List<String> utils) {
@@ -107,4 +112,11 @@ public class Project {
         this.links = links;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

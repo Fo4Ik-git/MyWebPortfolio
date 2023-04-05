@@ -30,7 +30,8 @@ public class UserController {
         this.logoService = logoService;
     }
 
-    @GetMapping
+    //TODO rewrite this method
+    @GetMapping("")
     public String userList(@AuthenticationPrincipal User user, Model model) {
         try {
             Config config = new Config(userService, logoService);
@@ -40,7 +41,7 @@ public class UserController {
             List<Role> roles = new ArrayList<>(user.getRoles());
             for (Role role : roles) {
                 switch (role) {
-                    case ADMIN, MODERATOR:
+                    case ADMIN:
                         model.addAttribute("users", userService.getAll());
                         break;
                 }

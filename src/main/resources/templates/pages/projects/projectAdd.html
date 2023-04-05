@@ -38,7 +38,11 @@
             <input type="checkbox" class="form-check-input" id="inProgress" name="inProgress">
             <label class="form-check-label" for="inProgress">In Progress?</label>
         </div>
+        <div class="error" th:if="${error}">
+            <h5 th:text="${error}"></h5>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-secondary"><a th:href="@{/projects}">Back</a></button>
     </form>
 </div>
 

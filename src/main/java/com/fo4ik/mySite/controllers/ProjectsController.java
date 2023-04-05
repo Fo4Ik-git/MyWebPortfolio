@@ -81,17 +81,17 @@ public class ProjectsController {
             @RequestParam("InputUtils") String util, boolean inProgress) {
         try {
             if (name.isEmpty() || description.isEmpty() || util.isEmpty()) {
-                model.addAttribute("message", "Please fill all fields");
-                return "redirect:/projects/add";
+                model.addAttribute("error", "Please fill all fields");
+                return "pages/projects/projectAdd";
             }
             Config config = new Config(userService, logoService);
             config.getUserLogo(user, model);
             model.addAttribute("title", "Add project");
 
             if (link.isEmpty()) {
-                projectService.createProject(name, description, inProgress, util, null);
+                projectService.createProject(name, description, inProgress, util, null, user);
             } else {
-                projectService.createProject(name, description, inProgress, util, link);
+                projectService.createProject(name, description, inProgress, util, link, user);
             }
 
 

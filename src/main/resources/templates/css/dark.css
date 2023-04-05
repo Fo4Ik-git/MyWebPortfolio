@@ -12,8 +12,17 @@ a {
     color: #000000;
 }
 
-.button{
- color: black;
+.button {
+    color: black;
+}
+
+.error {
+    background-color: red;
+    opacity: 0.8;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
 }
 
 /* Index page*/
@@ -122,14 +131,19 @@ a {
     color: #EE3737;
 }
 
-.project_div{
+.project_div {
     margin: 0px 2vh 2vh 0px;
 }
 
 .project_title {
     color: #E5E7E0;
     font-size: 30px;
+}
 
+.links {
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
 }
 
 /* The switch - the box around the slider */
@@ -217,10 +231,10 @@ input:checked + .slider:before {
 }
 
 .dropdown-toggle::after {
-color: #fff;
+    color: #fff;
 }
 
-.menuName{
+.menuName {
     color: #ffffff;
     /*font-family: 'Rampart One', cursive;*/
     font-size: 35px;

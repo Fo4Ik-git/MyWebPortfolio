@@ -19,7 +19,7 @@
                 <li th:text="${util}"></li>
             </ul>
             <ul class="list-group list-group-horizontal text-center" style="list-style: none;">
-                <li style="margin: 10px; " th:each="link : ${prj.getLinks()}">
+                <li class="links" th:each="link : ${prj.getLinks()}">
                     <a th:href="${link.getKey()}">
                         <img alt="Link image" style="height: 30px" th:src="${link.getValue()}">
                     </a>
@@ -53,7 +53,7 @@
                 <li th:text="${util}"></li>
             </ul>
             <ul class="list-group list-group-horizontal text-center" style="list-style: none;">
-                <li style="margin: 10px; " th:each="link : ${prj.getLinks()}">
+                <li class="links" th:each="link : ${prj.getLinks()}">
                     <a th:href="${link.getKey()}">
                         <img alt="Link image" style="height: 30px" th:src="${link.getValue()}">
                     </a>

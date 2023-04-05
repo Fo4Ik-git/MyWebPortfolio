@@ -35,12 +35,12 @@
                         <button type="submit" class="btn btn-primary"><a class="dropdown-item" href="/settings">Налаштування</a>
                         </button>
                     </li>
-                    <li th:if="${isAdmin}" style="text-align: center;">
+                    <!--<li th:if="${isAdmin}" style="text-align: center;">
                         <button style="width: 100%" type="submit" class="btn btn-primary"><a class="dropdown-item"
                                                                                              style="width: 100%"
-                                                                                             href="/user">User</a>
+                                                                                             th:href="@{/user}">User</a>
                         </button>
-                    </li>
+                    </li>-->
                     <li th:if="${user}" style="text-align: center">
                         <form th:action="@{/logout}" method="post">
                             <button style="width: 100%" type="submit" class="btn btn-warning">

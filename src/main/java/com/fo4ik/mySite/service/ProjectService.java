@@ -1,13 +1,18 @@
 package com.fo4ik.mySite.service;
 
 import com.fo4ik.mySite.model.Project;
+import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.repo.ProjectRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class ProjectService {
+
+    private static final Logger log = LoggerFactory.getLogger(ProjectService.class);
 
     private final ProjectRepo projectRepo;
 
@@ -23,9 +28,10 @@ public class ProjectService {
         return projectRepo.findById(id);
     }
 
-    public void createProject(String name, String description, boolean inProgress, String util, String link) {
-        Project project = new Project(name, description, inProgress, getUtils(util), getLinks(link));
+    public void createProject(String name, String description, boolean inProgress, String util, String link, User user) {
+        Project project = new Project(name, description, inProgress, getUtils(util), getLinks(link), user);
         projectRepo.save(project);
+        log.info("Project " + name + " for user: " + user.getUsername() + " has been created");
     }
 
     private List<String> getUtils(String util) {
