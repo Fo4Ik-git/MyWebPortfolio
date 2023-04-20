@@ -27,6 +27,9 @@ public class FileService {
     public List<File> getAllFiles() {
         return fileRepo.findAll();
     }
+    public List<File> getAllFilesByUser(User user) {
+        return fileRepo.findAllByUser_Id(user.getId());
+    }
 
     public void saveFile(File file) {
         fileRepo.save(file);

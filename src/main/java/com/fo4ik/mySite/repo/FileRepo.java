@@ -14,6 +14,7 @@ import java.util.List;
 public interface FileRepo extends JpaRepository<File, Long> {
 
     List<File> findAll();
+    List<File> findAllByUser_Id(long id);
 
     File findById(long id);
 
