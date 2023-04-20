@@ -14,7 +14,7 @@ public class File {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    public User user;
+    private User user;
 
     @ElementCollection
     @MapKeyColumn(name = "link")
