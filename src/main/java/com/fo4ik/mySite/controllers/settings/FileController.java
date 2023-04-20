@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/settings/file")
+@RequestMapping("/settings/files")
 public class FileController {
 
     private static final String FILE_PAGE = "pages/settings/files";
