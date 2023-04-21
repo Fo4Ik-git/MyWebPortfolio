@@ -1,4 +1,12 @@
 /*Global*/
+
+:root{
+    --white: #ffffff;
+    --black: #000000;
+    --text_white: #E5E7EB;
+    --background: #1F2937;
+}
+
 body {
     background-size: cover;
     background-repeat: no-repeat;
@@ -9,7 +17,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #000000;
+    color: var(--black);
 }
 
 .button {
@@ -19,20 +27,31 @@ a {
 .error {
     background-color: red;
     opacity: 0.8;
-    color: #fff;
+    color: var(--white);
     padding: 10px;
     border-radius: 5px;
     margin: 10px;
 }
 
+/*Files*/
+.form-label{
+    color: var(--white);
+}
+
+.files{
+    background-color: var(--background);
+    padding: 10px;
+    border-radius: 10px;
+}
+
 /* Index page*/
 .main h1 {
     font-size: 50px;
-    color: #ffffff;
+    color: var(--white);
 }
 
 .main h3 {
-    color: #E5E7EB;
+    color: var(--text_white);
 }
 
 .btn-cv {
@@ -50,12 +69,12 @@ a {
 }
 
 .btn-cv a, .btn-projects a {
-    color: #ffffff;
+    color: var(--white);
     font-size: 30px;
 }
 
 .btn-projects a {
-    color: #ffffff;
+    color: var(--white);
     font-size: 30px;
 }
 
@@ -98,7 +117,7 @@ a {
 
 /* Projects Add*/
 .projectAddForm label {
-    color: #ffffff;
+    color: var(--white);
 }
 
 /* Projects*/
@@ -117,7 +136,7 @@ a {
 
 .project {
     margin: 20px;
-    background-color: #1F2937;
+    background-color: var(--background);
     padding: 10px;
     border-radius: 10px;
 }
@@ -169,7 +188,7 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #1F2937;
+    background-color: var(--background);
     -webkit-transition: 0.4s;
     transition: 0.4s;
 }
