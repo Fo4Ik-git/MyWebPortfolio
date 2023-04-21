@@ -22,35 +22,6 @@ public class Config {
     }
 
     public void getUserLogo(User user, Model model) {
-      /*  try {
-            model.addAttribute("user", user);
-            if (user != null) {
-                User userFromDb = userService.getUser(user.getUsername());
-                Logo logo;
-                try {
-                    logo = logoService.getLogo(user);
-                } catch (Exception e) {
-                    logo = new Logo();
-                }
-                if (!logo.getPath().equals("")) {
-                    model.addAttribute("logo", logo.getPath());
-                }
-                if (user.isActive()) {
-                    model.addAttribute("isActive", true);
-                }
-                List<Role> roles = new ArrayList<>(user.getRoles());
-                for (Role role : roles) {
-                    switch (role) {
-                        case ADMIN -> model.addAttribute("isAdmin", true);
-                        case USER -> model.addAttribute("isUser", true);
-                        case MODERATOR -> model.addAttribute("isModerator", true);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }*/
-
         try {
             if (user != null) {
                 User userFromDb = userService.getUser(user.getUsername());
