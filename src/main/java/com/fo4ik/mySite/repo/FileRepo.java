@@ -18,6 +18,10 @@ public interface FileRepo extends JpaRepository<File, Long> {
 
     File findById(long id);
 
+    //Find link by file id
+    @Query("SELECT l FROM File f JOIN f.links l WHERE f.id = :fileId")
+    List<String> findUrlsByFileId(@Param("fileId") long fileId);
+
     @Query("SELECT f FROM File f JOIN f.links l WHERE KEY(l) = :link")
     File findByLink(@Param("link") String link);
 }

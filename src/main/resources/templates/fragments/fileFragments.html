@@ -1,48 +1,37 @@
-<div aria-hidden="true" aria-labelledby="filesLabel" class="modal fade" id="files" tabindex="-1" th:fragmet="dwdw">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="userEditModalLabel">Edit User</h1>
-                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-            </div>
-            <div class="modal-body">
-                <h2 class="fs-5">Popover in a modal</h2>
-                <p>This
-                    <button class="btn btn-secondary" data-bs-content="Popover body content is set in this attribute."
-                            data-bs-toggle="popover"
-                            title="Popover title">button
-                    </button>
-                    triggers a popover on click.
-                </p>
-                <hr>
-                <h2 class="fs-5">Tooltips in a modal</h2>
-                <p><a data-bs-toggle="tooltip" href="#" title="Tooltip">This link</a> and
-                    <a data-bs-toggle="tooltip"
-                       href="#"
-                       title="Tooltip">that link</a>
-                    have tooltips on hover.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="fileEditModal" tabindex="-1" aria-labelledby="fileEditModalLabel" aria-hidden="true"
-     th:fragment="file">
+<div aria-hidden="true" aria-labelledby="fileCreateModalLabel" class="modal fade" id="fileCreateModal" tabindex="-1"
+           th:fragment="file">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="logoEditModalLabel">Add/Change logo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="fileCreateModalLabel">Add new file</h1>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
             </div>
             <div class="modal-body">
-                <form th:action="@{/settings/files/}" method="post" enctype="multipart/form-data">
-                    <input type="file" name="logoFile" id="logoFile">
+                <form enctype="multipart/form-data" method="post" th:action="@{/settings/files/addFile}">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Name: </label>
+                        <input class="form-control" id="name" name="name" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="version">Version: </label>
+                        <input class="form-control" id="version" name="version" type="number" placeholder="Example 0.1" step="any">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="file">File: </label>
+                        <input class="form-control" id="file" name="file" type="file">
+                    </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <div th:if="${error}">
+                            <h4 style="color: red" th:text="${error}"></h4>
+                        </div>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+

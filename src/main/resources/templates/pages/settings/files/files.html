@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"/>
+<body>
+<head th:insert="~{fragments/menu :: menu}"/>
+
+<main>
+
+    <div class="container-lg files">
+        <div class="row search_bar">
+            <div class="col">
+                <!--TODO search files-->
+                <input class="align-middle" placeholder="Enter id or link" type="text">
+                <button class="btn btn-primary">Search</button>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-success" data-bs-target="#fileCreateModal" data-bs-toggle="modal">Add new file
+                </button>
+            </div>
+        </div>
+        <hr style="color: #fff;">
+        <div class="row" style="color: #fff" th:each="file: ${files}">
+            <div class="row">
+                <div class="col-2">
+                    <h5>Name: </h5>
+                </div>
+                <div class="col-2">
+                    <p th:text="${file.getName()}"></p>
+                </div>
+            </div>
+            <div th:each="links : ${file.getLinks()}">
+                <div class="row">
+                    <div class="col-1">
+                        <h5>Version: </h5>
+                    </div>
+                    <div class="col-1">
+                        <p th:text="${file.getVersion()}"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <h5>Url: </h5>
+                    </div>
+                    <div class="col-1">
+                        <a style="color: white" th:href="${links.getKey()}">Download</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <form method="post" th:action="@{/settings/files/deleteFile/{id}(id=${file.getId()})}">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-primary" type="submit">
+                        <a style="color: white"
+                           th:href="@{/settings/files/editFile/{id}(id=${file.getId()})}">Edit</a>
+                    </button>
+                </div>
+            </div>
+            <p></p>
+            <hr style="color: white">
+        </div>
+
+    </div>
+
+</main>
+
+<div th:insert="~{fragments/fileFragments :: file}"></div>
+
+<div th:insert="~{fragments/footer :: footer}"/>
+</body>
+</html>

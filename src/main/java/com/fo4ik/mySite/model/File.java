@@ -22,12 +22,13 @@ public class File {
     @CollectionTable(name = "files_links", joinColumns = {@JoinColumn(name = "file_id", referencedColumnName = "id")})
     Map<String, String> links = new HashMap<>();
 
-    private String name;
+    private String name, version;
 
-    public File(User user, Map<String, String> links, String name) {
+
+    public File(User user, String name, String version) {
         this.user = user;
-        this.links = links;
         this.name = name;
+        this.version = version;
     }
 
     public File() {
@@ -59,6 +60,14 @@ public class File {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public long getId() {
