@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"></head>
+<body>
+<header th:insert="~{fragments/menu.html :: menu}"></header>
+
+<div class="container">
+    <form method="post" th:action="@{/blog/editPost/{id}(id=${post.getId()})}">
+        <div class="mb-3">
+            <label class="form-label" for="title">Title: </label>
+            <input class="form-control" id="title" name="title" th:value="${post.getTitle()}" type="text">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="description">Description: </label>
+            <input class="form-control" id="description" name="description" th:value="${post.getDescription()}"
+                   type="text">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="text">Text: </label>
+            <textarea class="form-control" id="text" name="text" th:text="${post.getText()}" type="text">
+
+            </textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="imgUrl">ImgUlr: </label>
+            <input class="form-control" id="imgUrl" name="imgUrl" th:value="${post.getImgUrl()}" type="text">
+        </div>
+        <div class="modal-footer">
+            <div th:if="${error}">
+                <h4 style="color: red" th:text="${error}"></h4>
+            </div>
+            <button class="btn btn-secondary" type="button"><a th:href="@{/blog}">Back</a></button>
+            <button class="btn btn-primary" type="submit">Save changes</button>
+        </div>
+    </form>
+</div>
+
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

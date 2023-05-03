@@ -35,9 +35,9 @@ public class WebSecurityConfig{
         http
 
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/user").hasAnyAuthority("ADMIN", "MODERATOR", "USER")
+                                .requestMatchers("/blog/**").hasAnyAuthority("ADMIN", "MODERATOR")
                                 .requestMatchers("/login").authenticated()
-                                .requestMatchers("/", "/cv", "/about", "/registration", "/activate/*", "/files/users/**", "/projects" ,"/switchTheme", "/css/**","/files/users/1/pdf/**", "/download/**", "/api/**").permitAll().anyRequest().authenticated()
+                                .requestMatchers("/", "/cv", "/about", "/registration", "/activate/*", "/files/users/**", "/projects" ,"/switchTheme", "/css/**","/files/users/1/pdf/**", "/download/**", "/api/**", "/blog").permitAll().anyRequest().authenticated()
                         //"/","/scheme",
                 )
                 .formLogin((form) -> form

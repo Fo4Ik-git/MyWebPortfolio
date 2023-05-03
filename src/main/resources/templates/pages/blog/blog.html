@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"></head>
+<body>
+<header th:insert="~{fragments/menu.html :: menu}"></header>
+
+
+<main>
+    <div class="container">
+        <div class="row search_bar">
+            <div class="col">
+                <form th:action="@{/blog/search}">
+                    <input class="align-middle" name="search" placeholder="Enter tag or title" type="text">
+                    <button class="btn btn-primary">Search</button>
+                </form>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-success"><a th:href="@{/blog/createPost}">Create new post</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="row mb-2 justify-content-center">
+            <div class="col-12 col-md-5 post-list" th:each="post : ${posts}">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success">Post</strong>
+                        <!--TODO tags  -->
+                        <h3 class="mb-0" th:text="${post.getTitle()}"></h3>
+                        <h5 class="mb-auto"
+                            th:text="${post.getDescription()}"></h5>
+                        <p class="mb-1 text-body-secondary"
+                           th:text="${post.getUserName() + ' Author: ' + post.getDate()}"></p>
+                        <button class="btn btn-primary">
+                            <a class="stretched-link btn bnt-primary" th:href="@{/blog/{id}(id=${post.getId()})}">Continue
+                                reading</a>
+                        </button>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <svg aria-label="Placeholder: Thumbnail" class="bd-placeholder-img" focusable="false"
+                             height="250" preserveAspectRatio="xMidYMid slice" role="img" width="200"
+                             xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title>
+                            <image height="100%" th:href="${post.getImgUrl()}" width="100%"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <form method="post" th:action="@{/blog/deletePost/{id}(id=${post.getId()})}">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">
+                            <a style="color: white"
+                               th:href="@{/blog/editPost/{id}(id=${post.getId()})}">Edit</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
