@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -153,9 +155,29 @@ public class FileService {
         return Path.of(links.get(links.keySet().iterator().next()));
     }
 
+    public File getFileById(Long id) {
+        return fileRepo.findById(id).orElse(null);
+    }
+
+    public List<File> searchFilesByName(String name) {
+        return fileRepo.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<File> search(String query) {
+        List<File> files;
+        try {
+            Long id = Long.parseLong(query);
+            files = fileRepo.findById(id)
+                    .map(Collections::singletonList)
+                    .orElse(Collections.emptyList());
+        } catch (NumberFormatException e) {
+            files = searchFilesByName(query);
+        }
+        return files;
+    }
 
     public void deleteFile(long id) {
-        try{
+        try {
             Files.delete(getFileNameFromDB(id));
         } catch (Exception e) {
             log.error("Error in fileService deleteFile: " + e.getMessage(), e);

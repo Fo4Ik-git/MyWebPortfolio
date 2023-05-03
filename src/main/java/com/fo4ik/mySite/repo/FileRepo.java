@@ -1,5 +1,6 @@
 package com.fo4ik.mySite.repo;
 
+import com.fo4ik.mySite.model.Blog;
 import com.fo4ik.mySite.model.File;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,6 @@ public interface FileRepo extends JpaRepository<File, Long> {
 
     @Query("SELECT f FROM File f JOIN f.links l WHERE KEY(l) = :link")
     File findByLink(@Param("link") String link);
+
+    List<File> findByNameContainingIgnoreCase(String name);
 }

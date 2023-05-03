@@ -50,6 +50,7 @@ public class File {
         this.links = links;
     }
 
+
     public void addLink(String url, String pathToFileInDB) {
         this.links.put(url, pathToFileInDB);
     }

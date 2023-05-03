@@ -19,7 +19,6 @@ import java.nio.file.Path;
 public class FileRestController {
 
     private final FileService fileService;
-
     public FileRestController(FileService fileService) {
         this.fileService = fileService;
     }

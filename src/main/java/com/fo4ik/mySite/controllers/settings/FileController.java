@@ -111,6 +111,19 @@ public class FileController {
         return "redirect:/settings/files";
     }
 
+    @GetMapping("/search")
+    public String search(@AuthenticationPrincipal User user, @RequestParam("search") String search, Model model) {
+        model.addAttribute("title", "Search");
+        try {
+            Config config = new Config(userService, logoService);
+            config.getUserLogo(user, model);
+            model.addAttribute("files", fileService.search(search));
+        } catch (Exception e) {
+            log.error("Error in search: " + e.getMessage());
+        }
+        return FOLDER + "/files";
+    }
+
 
 
 
