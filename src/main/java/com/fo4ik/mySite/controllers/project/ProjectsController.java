@@ -1,4 +1,4 @@
-package com.fo4ik.mySite.controllers;
+package com.fo4ik.mySite.controllers.project;
 
 import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Project;
