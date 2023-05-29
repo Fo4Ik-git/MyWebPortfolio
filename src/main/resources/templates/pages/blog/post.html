@@ -1,26 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:insert="~{fragments/head :: head}"></head>
+<head th:insert="~{fragments/head :: blog}"></head>
 <body>
 <header th:insert="~{fragments/menu.html :: menu}"></header>
 
+<!--Main layout-->
+<main class="mt-4 mb-5">
+    <div class="container" style="background-color: white; padding-top: 10px">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 ">
+                <!--Section: Post data-mdb-->
+                <section class="border-bottom mb-4 text-center">
+                    <img alt=""
+                         class="img-fluid shadow-2-strong rounded-5 mb-4 mx-auto" th:src="${post.getImgUrl()}"
+                         width="720px"/>
 
-<div class="container">
-    <div class="post-header">
-        <h3 class="post-title" th:text="${post.getTitle()}"></h3>
-        <h5 th:text="${post.getDate() + ' Author: ' + post.getUserName()}"></h5>
-    </div>
-    <main class="post-main">
-        <p th:utext="${post.getText()}"></p>
-    </main>
-    <br>
-    <div class="text-end">
-        <button class="btn btn-primary " type="button">
-            <a th:href="@{/blog}">Back</a>
-        </button>
-    </div>
+                    <div class="row align-items-center mb-4">
+                        <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+                            <img alt=""
+                                 class="rounded-5 shadow-1-strong me-2"
+                                 height="35" loading="lazy" th:src="@{'/' + ${image}}"/>
+                            <span> Published <u th:text="${post.getDate()}"></u> by</span>
+                            <a class="text-dark" href="" th:text="${post.getUserName()}">Anna</a>
+                        </div>
 
-</div>
+                        <div class="col-lg-6 text-center text-lg-end">
+                            <button class="btn btn-primary px-3 me-1" style="background-color: #3b5998;" type="button">
+                                <a href="https://www.facebook.com/vladyslav.zinkovskyi/"><i
+                                        class="fab fa-facebook-f" style="color: white;"></i></a>
+                            </button>
+                            <button class="btn btn-primary px-3 me-1" style="background-color: #0082ca;" type="button">
+
+                                <a href="https://www.linkedin.com/in/vladyslav-zinkovskyi/"><i
+                                        class="fab fa-linkedin" style="color: white;"></i></a>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <!--Section: Post data-mdb-->
+
+                <!--Section: Text-->
+                <section th:utext="${post.getText()}">
+
+                </section>
+
+                <!--Section: Share buttons-->
+                <section class="text-center border-top border-bottom py-4 mb-4">
+                    <p><strong>Share with your friends:</strong></p>
+
+                    <button class="btn btn-primary me-1" style="background-color: #3b5998;" type="button">
+                        <a rel="noopener noreferrer" target="_blank"
+                           th:href="@{'https://www.facebook.com/sharer/sharer.php?u=' + ${pageUrl}}">
+                            <i class="fab fa-facebook-f" style="color: white;"></i>
+                        </a>
+                    </button>
+                    <button class="btn btn-primary me-1" style="background-color: #55acee;" type="button">
+                        <a rel="noopener noreferrer" target="_blank"
+                           th:href="@{'https://twitter.com/intent/tweet?url=' + ${pageUrl}}">
+                            <i class="fab fa-twitter" style="color: white;"></i>
+                        </a>
+                    </button>
+                    <button class="btn btn-primary me-1" style="background-color: #0082ca;" type="button">
+                        <a rel="noopener noreferrer" target="_blank"
+                           th:href="@{'https://www.linkedin.com/shareArticle?url=' + ${pageUrl}}">
+                            <i class="fab fa-linkedin" style="color: white;"></i>
+                        </a>
+                    </button>
+                </section>
+                <!--Section: Share buttons-->
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+    </div>
+</main>
+<!--Main layout-->
 
 <footer th:insert="~{fragments/footer :: footer}"></footer>
 </body>
