@@ -47,7 +47,7 @@ public class CvService {
             if (isImage) {
                 byte[] bytes = file.getBytes();
                 BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-                Path imagePath = Path.of(path + "/" + "cv.png");
+                Path imagePath = Path.of(path + "/" + "cv.jpg");
                 File output = new File(String.valueOf(imagePath));
 
 
