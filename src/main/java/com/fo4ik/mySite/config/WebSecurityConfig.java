@@ -6,18 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig{
+public class WebSecurityConfig {
 
     //@Autowired
     private final UserService userService;
@@ -35,9 +32,12 @@ public class WebSecurityConfig{
         http
 
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/blog/**").hasAnyAuthority("ADMIN", "MODERATOR")
+                                .requestMatchers("/settings/**").hasAnyAuthority("ADMIN", "MODERATOR")
                                 .requestMatchers("/login").authenticated()
-                                .requestMatchers("/", "/cv", "/about", "/registration", "/activate/*", "/files/users/**", "/projects" ,"/switchTheme", "/css/**","/files/users/1/pdf/**", "/download/**", "/api/**", "/blog").permitAll().anyRequest().authenticated()
+                                .requestMatchers("/", "/cv", "/about", "/registration", "/activate/*", "/files/users/**",
+                                        "/projects", "/css/**", "/js/**", "/download/**", "/api/**", "/blog/**",
+                                        "/editor"
+                                ).permitAll().anyRequest().authenticated()
                         //"/","/scheme",
                 )
                 .formLogin((form) -> form
@@ -47,7 +47,7 @@ public class WebSecurityConfig{
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .requiresChannel()
-                .requestMatchers(r->
+                .requestMatchers(r ->
                         r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
 
