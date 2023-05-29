@@ -10,7 +10,10 @@ public class Blog {
     private long id;
 
     //TODO add img, tags, comments, likes, dislikes
-    private String title, description, text, date, imgUrl;
+    private String title, description, date, imgUrl;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String text;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -72,11 +75,13 @@ public class Blog {
     public User getUser() {
         return user;
     }
+
     public long getUserId() {
         return user.getId();
     }
+
     public String getUserName() {
-        return user.getUsername();
+        return user.getName();
     }
 
     public void setUser(User user) {
