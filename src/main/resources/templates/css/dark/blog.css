@@ -1,0 +1,35 @@
+/*Global*/
+
+:root{
+    --white: #ffffff;
+    --black: #000000;
+    --text_white: #E5E7EB;
+    --background: #3f4862;
+}
+
+.post-list{
+    background-color: var(--background);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.post-title{
+    z-index: 1;
+    margin-left: 50px;
+}
+
+.post-header{
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 30px;
+    height: 100px;
+}
+
+.post-main{
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 30px;
+}
