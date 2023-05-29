@@ -15,9 +15,9 @@ To view the web portfolio, you will need an internet connection and a web browse
 The web portfolio was built using the following technologies:
 
 
--    Java
-- Spring Boot
--   CSS / HTML5
+-   Java 
+-   Spring Boot
+-   CSS / HTML5 / JS
 -   Bootstrap
 -   SQL
 
