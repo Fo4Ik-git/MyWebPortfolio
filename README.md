@@ -4,7 +4,7 @@ Welcome to my web portfolio! This project showcases my skills and experiences as
 
 ## Getting Started
 
-To view my web portfolio, simply go to [SITE](http://130.61.147.69:9000/). You can navigate through the pages using the menu bar located at the top of the page.
+To view my web portfolio, simply go to [SITE](site.fo4ik.tk:9000). You can navigate through the pages using the menu bar located at the top of the page.
 
 ## Prerequisites
 
