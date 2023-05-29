@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="~{fragments/head :: head}"></head>
+<head>
+    <link rel="stylesheet" th:href="@{'/css/dark/editor.css'}">
+</head>
+<body>
+<header th:insert="~{fragments/menu.html :: menu}"></header>
+
+<main class="container">
+    <div th:insert="~{fragments/editorFragments.html :: editTools}"></div>
+
+
+    <div class="my-4">
+        <div class="form-group">
+            <div contenteditable="true" id="editor"></div>
+        </div>
+    </div>
+    <div class="my-4" style="position: relative;">
+        <pre id="html-output"></pre>
+        <button class="copy-button" id="copy-button" onclick="copyHtmlOutput()"><i
+                class="fa-regular fa-clipboard"></i></button>
+    </div>
+
+    <div th:insert="~{fragments/editorFragments.html :: prompts}"></div>
+
+    <div th:insert="~{fragments/editorFragments.html :: js}"></div>
+</main>
+
+
+</body>
+</html>
