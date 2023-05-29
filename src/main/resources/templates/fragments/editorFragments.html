@@ -1,0 +1,158 @@
+<div class="row tools" th:fragment="editTools">
+    <div class="col-6 col-md-3 col-xl-3 d-flex" style="width: auto;">
+        <div class="my-2 rounded-start" id="font-selector">
+            <select class="form-select select-style" id="font-select" onchange="changeFont()">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Palatino">Palatino</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Arial Black">Arial Black</option>
+            </select>
+        </div>
+        <div class="my-2 rounded-end" id="font-size">
+            <input class="form-control select-size" id="font-size-input" list="dataList" max="72" min="8" onchange="changeFontSize()"
+                   step="1" type="number" value="16">
+            <datalist id="dataList">
+                <option value="8">8px</option>
+                <option value="10">10px</option>
+                <option value="12">12px</option>
+                <option value="14">14px</option>
+                <option selected value="16">16px</option>
+                <option value="18">18px</option>
+                <option value="20">20px</option>
+                <option value="22">22px</option>
+                <option value="24">24px</option>
+                <option value="26">26px</option>
+                <option value="28">28px</option>
+                <option value="30">30px</option>
+            </datalist>
+        </div>
+        <div class="my-2" id="font-apply">
+            <button class="btn btn-light form-control" onclick="changeFontSize()" style="width:60px; "
+                    type="button"><i class="fa-solid fa-check"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-3 col-md-2 col-xl-2" style="width: auto;">
+        <div class="my-2">
+            <div class="btn-group">
+                <button class="btn btn-light btn-icon" onclick="changeTextStyle('bold')" type="button">
+                    <i class="fa-solid fa-bold"></i>
+                </button>
+                <button class="btn btn-light btn-icon" onclick="changeTextStyle('underline')" type="button">
+                    <i class="fa-solid fa-underline"></i>
+                </button>
+                <button class="btn btn-light btn-icon" onclick="changeTextStyle('italic')" type="button">
+                    <i class="fa-solid fa-italic"></i>
+                </button>
+                <div class="dropdown">
+                    <button aria-expanded="false" class="btn btn-light btn-icon dropdown-toggle"
+                            data-bs-toggle="dropdown" id="align-code-dropdown" type="button">
+                        <i class="fa-solid fa-align-left"></i>
+                    </button>
+                    <ul aria-labelledby="align-code-dropdown" class="dropdown-menu dropdown-menu-end">
+                        <div class="btn-group text-side">
+                            <li class="dropdown-item">
+                                <button class="btn btn-light" onclick="alignCode('left')"
+                                        type="button"><i class="fa-solid fa-align-left"></i></button>
+                            </li>
+                            <li class="dropdown-item">
+                                <button class="btn btn-light" onclick="alignCode('center')"
+                                        type="button"><i
+                                        class="fa-solid fa-align-center"></i></button>
+                            </li>
+                            <li class="dropdown-item">
+                                <button class="btn btn-light" onclick="alignCode('right')"
+                                        type="button"><i
+                                        class="fa-solid fa-align-right"></i></button>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-2" style="width: auto;">
+        <div class="my-2">
+            <div class="btn-group">
+                <button class="btn btn-light btn-icon" onclick="openLinkPrompt()" type="button">
+                    <i class="fa-solid fa-link"></i>
+                </button>
+                <button class="btn btn-light btn-icon" onclick="openImagePrompt()" type="button">
+                    <i class="fa-regular fa-image"></i>
+                </button>
+                <button class="btn btn-light btn-icon" onclick="openMediaPrompt()" type="button">
+                    <i class="fa-solid fa-video"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="test">
+<h1>Hello</h1>
+</div>
+
+<div th:fragment="prompts">
+    <div class="media-prompt" id="imagePrompt">
+        <div class="media-prompt-content">
+            <div class="row">
+                <div class="col-7">
+                    <input class="input-group-text" id="imageUrl" placeholder="URL image" type="text">
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary" onclick="insertImage()">Insert</button>
+                </div>
+                <div class="col-2">
+                    <span class="close-button" onclick="closeImagePrompt()">&times;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="media-prompt" id="mediaPrompt">
+        <div class="media-prompt-content">
+            <span class="close-button" onclick="closeMediaPrompt()">&times;</span>
+            <input class="input-group-text" id="mediaUrl"
+                   placeholder="Enter URL video (YouTube)"
+                   style="width: 90%;" type="text">
+            <button class="btn btn-primary" onclick="insertMedia()" style="display: none;"></button>
+        </div>
+    </div>
+
+    <div class="media-prompt" id="linkPrompt">
+        <div class="media-prompt-content">
+            <div class="row justify-content-center">
+                <div class="col-7">
+                    <div class="row">
+                        <input class="input-group-text" id="linkText" placeholder="Link Text" type="text">
+                        <input class="input-group-text" id="linkUrl" placeholder="Link URL" type="text">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary" onclick="insertLink()">Insert</button>
+                </div>
+                <div class="col-2">
+                    <span class="close-button" onclick="closeLinkPrompt()">&times;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="js">
+    <script src="https://kit.fontawesome.com/2405df89b6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+
+    <script th:src="@{'/js/editor/editor.js'}"></script>
+    <script th:src="@{'/js/editor/image.js'}"></script>
+    <script th:src="@{'/js/editor/link.js'}"></script>
+    <script th:src="@{'/js/editor/video.js'}"></script>
+</div>
