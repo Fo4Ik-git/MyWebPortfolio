@@ -3,12 +3,14 @@ package com.fo4ik.mySite.controllers.blog;
 
 import com.fo4ik.mySite.config.Config;
 import com.fo4ik.mySite.model.Blog;
+import com.fo4ik.mySite.model.Logo;
 import com.fo4ik.mySite.model.User;
 import com.fo4ik.mySite.service.BlogService;
 import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,12 @@ public class BlogController {
     private final LogoService logoService;
     private final BlogService blogService;
     private static final String FOLDER = "pages/blog/";
+
+    @Value("${user}")
+    private String username;
+
+    @Value("${host}")
+    private String host;
 
     public BlogController(UserService userService, LogoService logoService, BlogService blogService) {
         this.userService = userService;
@@ -67,7 +75,7 @@ public class BlogController {
             Config config = new Config(userService, logoService);
             config.getUserLogo(user, model);
             Date date = new Date();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String strDate = formatter.format(date);
 
             blogService.createPost(user, title, description, text, strDate, imgUrl);
@@ -97,6 +105,11 @@ public class BlogController {
             config.getUserLogo(user, model);
 
             Blog post = blogService.getPost(id);
+
+            User contentUser = userService.getUser(username);
+            Logo contentLogo = logoService.getLogo(contentUser);
+            model.addAttribute("image", contentLogo.getPath());
+            model.addAttribute("pageUrl", host + "/blog/" + id);
             model.addAttribute("title", post.getTitle());
             model.addAttribute("post", post);
         } catch (Exception e) {
@@ -114,6 +127,7 @@ public class BlogController {
         try {
             Config config = new Config(userService, logoService);
             config.getUserLogo(user, model);
+
             model.addAttribute("title", "Edit post");
             model.addAttribute("post", blogService.getPost(id));
         } catch (Exception e) {
@@ -134,6 +148,7 @@ public class BlogController {
             config.getUserLogo(user, model);
             model.addAttribute("title", "Edit post");
             blogService.updatePost(id, title, description, text, imgUrl);
+            //TODO create in editor past code
         } catch (Exception e) {
             log.error("Error in blog: " + e.getMessage());
         }

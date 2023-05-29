@@ -145,5 +145,4 @@ public class SettingsController {
         return redirect;
     }
 
-    //TODO push this v to server
 }

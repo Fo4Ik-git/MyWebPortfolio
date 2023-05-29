@@ -7,6 +7,7 @@ import com.fo4ik.mySite.service.LogoService;
 import com.fo4ik.mySite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class AboutController {
     private final UserService userService;
 
     private final LogoService logoService;
+
+    @Value("${user}")
+    private String username;
 
     public AboutController(UserService userService, LogoService logoService) {
         this.userService = userService;
@@ -37,7 +41,7 @@ public class AboutController {
                 model.addAttribute("contentUser", user);
             }
 
-            User contentUser = userService.getUser("fo4ik");
+            User contentUser = userService.getUser(username);
             Logo contentLogo = logoService.getLogo(contentUser);
             model.addAttribute("image", contentLogo.getPath());
             model.addAttribute("contentUser", contentUser);
